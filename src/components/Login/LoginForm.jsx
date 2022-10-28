@@ -1,5 +1,9 @@
-function LoginForm() {
-     return <div>hello world</div>;
+import React from "react";
+
+const LoginForm = () => {
+     return (
+          <></>
+     );
 }
 
 export default LoginForm;
