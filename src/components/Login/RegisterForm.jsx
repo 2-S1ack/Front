@@ -60,6 +60,7 @@ const StyleRegister = styled.div`
      h2 {
           font-size: 300%;
           font-weight: 800;
+          margin-top: 20px;
      }
      .middle-title {
           padding: 10px 0 30px 0;
