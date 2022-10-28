@@ -1,17 +1,13 @@
-import Layout from "../components/Global/Layout";
-import Header from "../components/Global/Header";
-import ChatList from "../components/Chat/ChatList";
-import ChatForm from "../components/Chat/ChatForm";
+import Layout from "../components/ui/Layout";
+import Header from "../components/main/Header";
+import Chat from "../components/main/Chat";
 
 function Main() {
      return (
-          <>
+          <Layout>
                <Header />
-               <Layout>
-                    <ChatList />
-                    <ChatForm />
-               </Layout>
-          </>
+               <Chat />
+          </Layout>
      );
 }
 
