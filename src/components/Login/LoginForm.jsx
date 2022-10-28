@@ -3,9 +3,9 @@ import LogoImg from "../../img/s1ack.png";
 
 function LoginForm() {
      return (
-          <LoginStyle>
+          <StyleLogin>
                <div className="first-s1ack">
-                    <p>S1ack을 처음 사용하시나요?</p>
+                    <p>s1ack을 처음 사용하시나요?</p>
                     <p>계정 생성</p>
                </div>
                <img src={LogoImg} alt="logo" />
@@ -20,19 +20,18 @@ function LoginForm() {
                     <input type="password" placeholder="password" />
                     <button>이메일로 로그인</button>
                </form>
-          </LoginStyle>
+          </StyleLogin>
      );
 }
 
 export default LoginForm;
 
-const LoginStyle = styled.div`
+const StyleLogin = styled.div`
      width: 100%;
-     height: 100vh;
+     height: 850px;
      display: flex;
      flex-direction: column;
      align-items: center;
-     padding: 50px 0;
      .first-s1ack {
           position: absolute;
           right: 50px;
@@ -41,7 +40,7 @@ const LoginStyle = styled.div`
           align-items: flex-end;
      }
      img {
-          width: 180px;
+          width: 150px;
           padding: 20px;
      }
      h2 {
@@ -60,16 +59,16 @@ const LoginStyle = styled.div`
           flex-direction: column;
           align-items: center;
           input {
-               width: 500px;
+               width: 430px;
                height: 45px;
                padding: 0 10px;
-               margin: 10px;
+               margin: 15px;
           }
           button {
-               width: 520px;
+               width: 450px;
                height: 45px;
                padding: 10px;
-               margin: 10px;
+               margin: 15px;
           }
      }
 `;
