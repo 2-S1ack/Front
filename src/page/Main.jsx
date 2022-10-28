@@ -1,7 +1,7 @@
-import Layout from "../components/Global/Layout";
-import Header from "../components/Global/Header";
-import ChatList from "../components/Chat/ChatList";
-import ChatForm from "../components/Chat/ChatForm";
+import Layout from "../components/ui/Layout";
+import Header from "../components/ui/Header";
+import ChatList from "../components/chat/ChatList";
+import ChatForm from "../components/chat/ChatForm";
 
 function Main() {
      return (

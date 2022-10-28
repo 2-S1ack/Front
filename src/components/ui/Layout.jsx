@@ -1,24 +1,21 @@
 import React from "react";
 import styled from "styled-components";
 
-const Layout = ({children}) => {
+const Layout = ({ children }) => {
      return (
           <>
-               <LayoutContainer>
-                    <h1>ㅎㅇㅎㅇ</h1>
-                    {children}
-               </LayoutContainer>
+               <LayoutContainer>{children}</LayoutContainer>
           </>
      );
-}
+};
 
 export default Layout;
 
 const LayoutContainer = styled.div`
-  max-width: 100%;
-  max-height: 100%;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+     max-width: 100%;
+     max-height: 100%;
+     min-height: 100vh;
+     display: flex;
+     justify-content: center;
+     align-items: center;
 `;

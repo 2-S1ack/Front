@@ -1,6 +1,6 @@
-import Layout from "../components/Global/Layout";
-import Footer from "../components/Global/Footer";
-import RegisterForm from "../components/Login/RegisterForm";
+import Layout from "../components/ui/Layout";
+import Footer from "../components/ui/Footer";
+import RegisterForm from "../components/login/RegisterForm";
 
 function Register() {
      return (

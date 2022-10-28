@@ -1,5 +1,5 @@
-import Layout from "../components/Global/Layout";
-import Footer from "../components/Global/Footer";
+import Layout from "../components/ui/Layout";
+import Footer from "../components/ui/Footer";
 import EnterPage from "../components/EnterPage";
 
 function Enter() {
