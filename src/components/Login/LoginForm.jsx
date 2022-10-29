@@ -4,12 +4,6 @@ import LogoImg from "../../img/s1ack.png";
 function LoginForm() {
      return (
           <StyleLogin>
-               <div className="first-s1ack">
-                    <p>s1ack을 처음 사용하시나요?</p>
-                    <p>계정 생성</p>
-               </div>
-               <img src={LogoImg} alt="logo" />
-
                <h2>이메일로 로그인 해보세요</h2>
                <p className="middle-title">
                     <b>직장에서 사용하는 이메일 주소</b>로 로그인하는 걸
@@ -28,28 +22,21 @@ export default LoginForm;
 
 const StyleLogin = styled.div`
      width: 100%;
-     height: 850px;
      display: flex;
      flex-direction: column;
      align-items: center;
-     .first-s1ack {
-          position: absolute;
-          right: 50px;
-          display: flex;
-          flex-direction: column;
-          align-items: flex-end;
-     }
-     img {
-          width: 150px;
-          padding: 20px;
-     }
+
      h2 {
-          font-size: 300%;
-          font-weight: 800;
-          margin-top: 20px;
+          font-size: 48px;
+          font-weight: 700;
+          margin-top: 5px;
+          max-width: 700px;
      }
      .middle-title {
-          padding: 10px 0 30px 0;
+          font-size: 18px;
+          line-height: 27px;
+          max-width: 700px;
+          margin-bottom: 32px;
           b {
                font-weight: 600;
           }
@@ -59,17 +46,31 @@ const StyleLogin = styled.div`
           display: flex;
           flex-direction: column;
           align-items: center;
+          font-size: 18px;
+          font-weight: 800;
           input {
-               width: 430px;
-               height: 45px;
+               width: 400px;
+               height: 44px;
                padding: 0 10px;
-               margin: 15px;
+               margin-bottom: 20px;
+               border-radius: 3px;
+               border: none;
+               outline: 1px solid #888;
           }
           button {
-               width: 450px;
-               height: 45px;
-               padding: 10px;
-               margin: 15px;
+               width: 420px;
+               height: 44px;
+               padding: 0 16px 3px;
+               margin-bottom: 20px;
+               font-size: 18px;
+               color: white;
+               background-color: #4a154b;
+               border: none;
+               border-radius: 3px;
+               cursor: pointer;
+          }
+          button:hover {
+               background-color: #703578;
           }
      }
 `;

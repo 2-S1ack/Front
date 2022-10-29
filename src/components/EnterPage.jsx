@@ -4,8 +4,6 @@ import LogoImg from "../img/s1ack.png";
 function EnterPage() {
      return (
           <StyleEnter>
-               <img src={LogoImg} alt="logo" />
-
                <h2>만나게 되어 반가워요. 오늘 멋지시네요!</h2>
                <p className="middle-title">
                     아래의 버튼을 눌러 s1ack을 시작해주세요.
@@ -25,23 +23,28 @@ const StyleEnter = styled.div`
      align-items: center;
      box-sizing: border-box;
 
-     img {
-          width: 150px;
-          padding: 20px;
-     }
      h2 {
           font-size: 300%;
           font-weight: 800;
-          margin-top: 20px;
+          margin-top: 5px;
      }
      .middle-title {
-          margin-top: 100px;
+          margin-top: 50px;
           padding: 10px 0 30px 0;
      }
      button {
-          width: 400px;
-          height: 45px;
-          padding: 10px;
-          margin: 15px;
+          width: 420px;
+          height: 44px;
+          padding: 0 16px 3px;
+          margin-bottom: 20px;
+          font-size: 18px;
+          color: white;
+          background-color: #4a154b;
+          border: none;
+          border-radius: 3px;
+          cursor: pointer;
+     }
+     button:hover {
+          background-color: #703578;
      }
 `;

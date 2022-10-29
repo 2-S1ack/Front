@@ -1,11 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import LogoImg from "../../img/s1ack.png";
 
 function RegisterForm() {
      return (
           <StyleRegister>
-               <img src={LogoImg} alt="logo" />
                <h2>이메일로 회원가입을 해주세요</h2>
                <p className="middle-title">
                     <b>직장에서 사용하는 이메일 주소</b>로 회원가입하는 걸
@@ -34,11 +32,11 @@ function RegisterForm() {
                               placeholder="password check"
                          />
                     </div>
-                    <button>회원가입</button>
+                    <button className="signup">회원가입</button>
                </form>
                <div className="use-s1ack">
-                    <p>s1ack을 사용해보신 적이 있으신가요?</p>
-                    <p>s1ack 로그인</p>
+                    <p>이미 s1ack을 사용하고 있나요?</p>
+                    <a href="/">s1ack 로그인</a>
                </div>
           </StyleRegister>
      );
@@ -53,14 +51,10 @@ const StyleRegister = styled.div`
      flex-direction: column;
      align-items: center;
 
-     img {
-          width: 150px;
-          padding: 20px;
-     }
      h2 {
           font-size: 300%;
           font-weight: 800;
-          margin-top: 20px;
+          margin-top: 5px;
      }
      .middle-title {
           padding: 10px 0 30px 0;
@@ -73,39 +67,76 @@ const StyleRegister = styled.div`
           display: flex;
           flex-direction: column;
           align-items: center;
-          gap: 5px;
           div {
                display: flex;
+               justify-content: center;
                align-items: center;
-               width: 480px;
+               width: 420px;
                height: 45px;
-               padding: 0 10px;
-               margin: 10px;
+               margin-bottom: 20px;
                input {
                     width: 80%;
-                    height: 45px;
+                    height: 44px;
                     padding: 0 10px;
-                    margin: 10px;
+                    border-radius: 3px;
+                    border: none;
+                    outline: 1px solid #888;
+               }
+               input:focus {
+                    border-radius: 3px;
+                    border: none;
+                    outline: 3px solid cornflowerblue;
                }
                button {
                     width: 20%;
-                    height: 50px;
+                    height: 48px;
+                    color: #4a154b;
+                    background-color: white;
+                    font-weight: 800;
+                    border: 2px solid #4a154b;
+                    border-radius: 3px;
+                    margin-left: 10px;
+                    cursor: pointer;
+               }
+               button:hover {
+                    color: white;
+                    background-color: #4a154b;
+                    border: none;
                }
                .pass-input {
                     width: 100%;
                }
           }
-          button {
-               width: 460px;
-               height: 45px;
-               padding: 10px;
-               margin: 15px;
+          .signup {
+               width: 420px;
+               height: 44px;
+               padding: 0 16px 3px;
+               margin-bottom: 20px;
+               font-size: 18px;
+               color: white;
+               background-color: #4a154b;
+               border: none;
+               border-radius: 3px;
+               cursor: pointer;
+          }
+          .signup:hover {
+               background-color: #703578;
           }
      }
      .use-s1ack {
           display: flex;
           flex-direction: column;
           align-items: center;
-          padding: 40px;
+          font-size: 15px;
+          margin-top: 24px;
+          a {
+               text-decoration: none;
+               color: cornflowerblue;
+               font-weight: 700;
+          }
+          a:hover {
+               color: blue;
+               text-decoration: underline;
+          }
      }
 `;
