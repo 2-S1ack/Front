@@ -1,22 +1,33 @@
-import React from "react";
+import React, {useState} from "react";
 import styled from "styled-components";
+import AddPlayerModal from "./AddPlayerModal";
 
 const ChatList = () => {
+
+    const [addPlayer, setAddPlayer] = useState(false);
+    
     return (
         <ChatListContainer>        
             <Workspace>S1ack</Workspace>
             <ChannelWrap>
-                <ChannelButton>▶</ChannelButton>
-                <span>채널</span>
+                <details>
+                    <summary>채널</summary>
+                    <p># 채널1</p>
+                    <p># 채널2</p>
+                    <p># 채널3</p>
+                </details>
             </ChannelWrap>
             <DirectWrap>
-                <DirectButton>▶</DirectButton>
-                <span>다이렉트 메세지</span>
-                {/* <AddPlayer>
-                    <span>➕</span>
+                <details>
+                    <summary>다이렉트 메세지</summary>
+                    <p>유저1</p>
+                    <p>유저2</p>
+                    <p>유저3</p>
+                    <button onClick={() => {setAddPlayer(!addPlayer)}}>➕</button>
                     <span>팀원 추가</span>
-                </AddPlayer> */}
+                </details>
             </DirectWrap>
+            {addPlayer && <AddPlayerModal hide={() => {setAddPlayer(false)}} />}
         </ChatListContainer>
     );
 }
@@ -46,50 +57,40 @@ const Workspace = styled.div`
 
 const ChannelWrap = styled.div`
     width: 100%;
-    height: 30%;
-    padding: 25px;
-    span {
+    height: 40%;
+    padding: 15px;
+    display: flex;
+    details {
         color: #C6B7C6;
         font-weight: bold;
         margin-left: 10px;
+        p {
+            margin-left: 15px;
+            margin-top: 5px;
+        }
     }
-`;
-
-const ChannelButton = styled.div`
-    width: 10px;
-    height: 10px;
-    display: inline;
-    color: #C6B7C6;
-    font-weight: bold;
 `;
 
 const DirectWrap = styled.div`
     width: 100%;
-    height: 30%;
-    padding: 25px;
-    span {
+    height: 40%;
+    padding: 15px;
+    display: flex;
+    details {
         color: #C6B7C6;
         font-weight: bold;
         margin-left: 10px;
-    }
-`;
-
-const DirectButton = styled.div`
-    width: 10px;
-    height: 10px;
-    display: inline;
-    color: #C6B7C6;
-    font-weight: bold;
-`;
-
-const AddPlayer = styled.div`
-    display: block;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 10px;
-    button {
-        width: 20px;
-        height: 20px;
+        p {
+            margin-left: 15px;
+            margin-top: 5px;
+        }
+        button {
+            cursor: pointer;
+            width: 25px;
+            height: 25px;
+            background: none;
+            border: none;
+            margin-left: 10px;
+        }
     }
 `;

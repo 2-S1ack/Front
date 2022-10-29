@@ -1,11 +1,19 @@
 import React from "react";
+import { useState } from "react";
 import styled from "styled-components";
+import ProfileModal from "./ProfileModal"
 
 const Header = () => {
+
+     const [modalOn, setModalOn] = useState(false);
+
      return (
           <HeaderNav>
                <SearchMessage />
-               <Myinfo src={"/images/default.PNG"} />
+               <MyinfoWrap onClick={() => {setModalOn(!modalOn)}}>
+                    <Myinfo src={"/images/default.PNG"} />
+               </MyinfoWrap>
+               {modalOn && <ProfileModal />}
           </HeaderNav>
      );
 }
@@ -29,10 +37,15 @@ const SearchMessage = styled.div`
      margin:0 0 0 auto;
 `;
 
-
-const Myinfo = styled.img`
+const MyinfoWrap = styled.div`
      width: 30px;
      height: 60%;
      margin: 0 0 0 auto;
      margin-right: 20px;
+     cursor: pointer;
+`;
+
+const Myinfo = styled.img`
+     width: 30px;
+     height: 100%;
 `;
