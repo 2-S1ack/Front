@@ -1,9 +1,8 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-
+import Main from "../page/Main";
 import Login from "../page/Login";
 import Register from "../page/Register";
 import Enter from "../page/Enter";
-import Main from "../page/Main";
 const Router = () => {
      return (
           <BrowserRouter>
