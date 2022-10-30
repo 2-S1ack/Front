@@ -1,4 +1,4 @@
-import {createGlobalStyle} from "styled-components";
+import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
 @import url('https://fonts.googleapis.com/css2?family=Fuzzy+Bubbles&family=Source+Sans+Pro:wght@300&display=swap');
@@ -51,6 +51,18 @@ const GlobalStyle = createGlobalStyle`
     * {
     font-family: 'Source Sans Pro', sans-serif;;
     }
-`; 
+
+    html{
+        --color-background: #350d36;
+        --color-bright-violet: #5d3d5e;
+        --color-status:#2bac76;
+        --color-sidebar-back: #3f0e40;
+        --color-sidebar-text: #bfafbf;
+        --color-chatbox-word :#cfcfcf;
+        --color-chatinput-header-btn:#cacaca;
+        --color-chatinput-footer-btn:#606060;
+        --color-chatinput-footer-back : #f2f2f2;
+    }
+`;
 
 export default GlobalStyle;
