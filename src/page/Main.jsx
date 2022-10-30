@@ -4,10 +4,12 @@ import Chat from "../components/main/Chat";
 
 function Main() {
      return (
-          <Layout>
-               <Header />
-               <Chat />
-          </Layout>
+          <>
+               <Layout>
+                    <Header />
+                    <Chat />
+               </Layout>
+          </>
      );
 }
 

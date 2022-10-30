@@ -1,96 +1,173 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import AddPlayerModal from "./AddPlayerModal";
+import { SlNote } from "react-icons/sl";
+import { IoIosArrowDown, IoIosAdd, IoMdPerson } from "react-icons/io";
 
 const ChatList = () => {
+     const [addPlayer, setAddPlayer] = useState(false);
 
-    const [addPlayer, setAddPlayer] = useState(false);
-    
-    return (
-        <ChatListContainer>        
-            <Workspace>S1ack</Workspace>
-            <ChannelWrap>
-                <details>
-                    <summary>채널</summary>
-                    <p># 채널1</p>
-                    <p># 채널2</p>
-                    <p># 채널3</p>
-                </details>
-            </ChannelWrap>
-            <DirectWrap>
-                <details>
-                    <summary>다이렉트 메세지</summary>
-                    <p>유저1</p>
-                    <p>유저2</p>
-                    <p>유저3</p>
-                    <button onClick={() => {setAddPlayer(!addPlayer)}}>➕</button>
-                    <span>팀원 추가</span>
-                </details>
-            </DirectWrap>
-            {addPlayer && <AddPlayerModal hide={() => {setAddPlayer(false)}} />}
-        </ChatListContainer>
-    );
-}
+     return (
+          <ChatListContainer>
+               <Workspace>
+                    S1ack
+                    <IoIosArrowDown />
+               </Workspace>
+               <button className="write-style-btn">
+                    <SlNote className="write-style" />
+               </button>
+               <ChannelWrap>
+                    <details>
+                         <summary>채널</summary>
+                         <p># 채널1</p>
+                         <p># 채널2</p>
+                         <p># 채널3</p>
+                    </details>
+               </ChannelWrap>
+               <DirectWrap>
+                    <details>
+                         <summary>다이렉트 메세지</summary>
+                         <div className="team-line-style">
+                              <button>
+                                   <IoMdPerson className="plus-team-style" />
+                              </button>
+                              <span>유저1</span>
+                         </div>
+                         <div className="team-line-style">
+                              <button>
+                                   <IoMdPerson className="plus-team-style" />
+                              </button>
+                              <span>유저2</span>
+                         </div>
+                         <div className="team-line-style">
+                              <button>
+                                   <IoMdPerson className="plus-team-style" />
+                              </button>
+                              <span>유저3</span>
+                         </div>
+                         <div className="team-line-style">
+                              <button
+                                   onClick={() => {
+                                        setAddPlayer(!addPlayer);
+                                   }}
+                              >
+                                   <IoIosAdd className="plus-team-style" />
+                              </button>
+                              <span>팀원 추가</span>
+                         </div>
+                    </details>
+               </DirectWrap>
+               {addPlayer && (
+                    <AddPlayerModal
+                         hide={() => {
+                              setAddPlayer(false);
+                         }}
+                    />
+               )}
+          </ChatListContainer>
+     );
+};
 
 export default ChatList;
 
 const ChatListContainer = styled.div`
-    width: 18%;
-    height: 100%;
-    background-color: #3F0E40;
-    margin: 0 auto 0 0;
+     width: 15%;
+     height: 100%;
+     background-color: var(--color-sidebar-back);
+     box-sizing: border-box;
+     position: relative;
+     .write-style-btn {
+          width: 34px;
+          height: 34px;
+          background-color: white;
+          border-radius: 50%;
+          border: none;
+          position: absolute;
+          right: 10px;
+          top: 10px;
+          .write-style {
+               width: 18px;
+               height: 18px;
+               color: var(--color-sidebar-back);
+               font-weight: 800;
+          }
+     }
 `;
 
 const Workspace = styled.div`
-    width: 100%;
-    height: 50px;
-    background-color: #3F0E40;
-    border-top: 1px solid gray;
-    border-bottom: 1px solid gray;
-    color: #FFFEF8;
-    font-size: 22px;
-    font-weight: bolder;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+     height: 49px;
+     background-color: var(--color-sidebar-back);
+     border-top: 1px solid gray;
+     border-bottom: 1px solid gray;
+     color: #fffef8;
+     font-size: 18px;
+     font-weight: bolder;
+     display: flex;
+     align-items: center;
+     justify-content: flex-start;
+     gap: 5px;
+     padding: 0 54px 0 16px;
+     cursor: pointer;
 `;
 
 const ChannelWrap = styled.div`
-    width: 100%;
-    height: 40%;
-    padding: 15px;
-    display: flex;
-    details {
-        color: #C6B7C6;
-        font-weight: bold;
-        margin-left: 10px;
-        p {
-            margin-left: 15px;
-            margin-top: 5px;
-        }
-    }
+     width: 100%;
+     height: 40%;
+     padding: 15px 0;
+     display: flex;
+     font-size: 15px;
+     details {
+          color: var(--color-sidebar-text);
+          font-weight: bold;
+          padding-left: 10px;
+          p {
+               margin-left: 15px;
+               margin-top: 5px;
+          }
+     }
 `;
 
 const DirectWrap = styled.div`
-    width: 100%;
-    height: 40%;
-    padding: 15px;
-    display: flex;
-    details {
-        color: #C6B7C6;
-        font-weight: bold;
-        margin-left: 10px;
-        p {
-            margin-left: 15px;
-            margin-top: 5px;
-        }
-        button {
-            cursor: pointer;
-            width: 25px;
-            height: 25px;
-            background: none;
-            border: none;
-            margin-left: 10px;
-        }
-    }
+     width: 100%;
+     height: 40%;
+     display: flex;
+     font-size: 15px;
+     details {
+          color: var(--color-sidebar-text);
+          font-weight: bold;
+          padding-left: 10px;
+          width: 100%;
+          position: relative;
+          .team-line-style {
+               width: calc(100%-10px);
+               display: flex;
+               align-items: center;
+               justify-content: flex-start;
+               gap: 5px;
+               margin-top: 5px;
+               cursor: pointer;
+               margin-left: 10px;
+               position: relative;
+          }
+          .team-line-style:hover {
+               width: calc(100%-10px);
+               background-color: var(--color-background);
+               margin-left: -10px;
+               padding-left: 20px;
+               overflow: hidden;
+          }
+          button {
+               width: 25px;
+               height: 25px;
+               background: none;
+               border: none;
+               .plus-team-style {
+                    font-size: 18px;
+                    background-color: #532753;
+                    border-radius: 3px;
+                    color: var(--color-sidebar-text);
+                    margin-top: 3px;
+               }
+          }
+     }
 `;
