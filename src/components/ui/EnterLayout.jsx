@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-const Layout = ({ children }) => {
+const EnterLayout = ({ children }) => {
      return (
           <>
                <LayoutContainer>{children}</LayoutContainer>
@@ -9,9 +9,12 @@ const Layout = ({ children }) => {
      );
 };
 
-export default Layout;
+export default EnterLayout;
 
 const LayoutContainer = styled.div`
      max-width: 100%;
-     height: 100vh;
+     max-height: 100%;
+     display: flex;
+     justify-content: center;
+     align-items: center;
 `;
