@@ -53,6 +53,7 @@ const GlobalStyle = createGlobalStyle`
     }
 
     html{
+        --color-login-btn:#4a154b;
         --color-background: #350d36;
         --color-bright-violet: #5d3d5e;
         --color-status:#2bac76;
@@ -62,6 +63,7 @@ const GlobalStyle = createGlobalStyle`
         --color-chatinput-header-btn:#cacaca;
         --color-chatinput-footer-btn:#606060;
         --color-chatinput-footer-back : #f2f2f2;
+    
     }
 `;
 

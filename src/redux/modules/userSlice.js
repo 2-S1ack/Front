@@ -6,6 +6,7 @@ const initialState = {
      isLoading: false,
      error: null,
      isEmailCheck: false,
+     isNameCheck: false,
      isLogin: false,
 };
 
@@ -73,10 +74,10 @@ export const _postUserLogin = createAsyncThunk(
                               "refresh_token",
                               res.headers.refresh_token
                          );
+                         console.log(res.data);
                          return res;
-                         //console.log(res.headers.refresh_token);
                     });
-               console.log(data);
+               //console.log(data);
                return thunkAPI.fulfillWithValue(data);
           } catch (error) {
                return thunkAPI.fulfillWithValue(error);
@@ -87,7 +88,11 @@ export const _postUserLogin = createAsyncThunk(
 const userList = createSlice({
      name: "userList",
      initialState,
-     reducers: {},
+     reducers: {
+          loginState: (state) => {
+               state.isLogin = true;
+          },
+     },
      extraReducers: {
           [_postUserJoin.pending]: (state) => {
                state.isLoading = true;
@@ -105,7 +110,7 @@ const userList = createSlice({
                console.log(action.payload.data);
                if (action.payload.data.success === true) {
                     state.isEmailCheck = true;
-                    alert("중복된 이메일이 존재하지 않습니다.”");
+                    alert("중복된 이메일이 존재하지 않습니다.");
                }
                if (!action.payload.data.success) {
                     state.isEmailCheck = false;
@@ -114,31 +119,39 @@ const userList = createSlice({
           },
           [_postNameCheck.fulfilled]: (state, action) => {
                state.isLoading = false;
-               console.log(action.payload.data);
+               //console.log(action.payload.data);
                if (action.payload.data.success === true) {
-                    state.isEmailCheck = true;
-                    alert("중복된 이름이 존재하지 않습니다.”");
+                    state.isNameCheck = true;
+                    alert("중복된 이름이 존재하지 않습니다.");
                }
                if (!action.payload.data.success) {
-                    state.isEmailCheck = false;
+                    state.isNameCheck = false;
                     alert("중복된 이름이 존재합니다.");
                }
           },
 
           [_postUserLogin.fulfilled]: (state, action) => {
+               console.log("success", action.payload.success);
                state.isLoading = false;
-               state.isLogin = true;
-               sessionStorage.setItem(
-                    "userinfo",
-                    JSON.stringify(action.payload.data)
-               );
+               if (action.payload.success === true) {
+                    state.isLogin = true;
+                    sessionStorage.setItem(
+                         "userinfo",
+                         JSON.stringify(action.payload.data)
+                    );
+               } else {
+                    state.isLogin = false;
+                    alert("오류");
+               }
           },
           [_postUserLogin.rejected]: (state, action) => {
                state.isLoading = false;
                state.isLogin = false;
+               state.error = action.payload;
                alert("로그인 확인");
           },
      },
 });
 
+export const { loginState } = userList.actions;
 export default userList.reducer;

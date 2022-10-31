@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { _postUserLogin } from "../../redux/modules/userSlice";
+import { loginState, _postUserLogin } from "../../redux/modules/userSlice";
 
 function LoginForm() {
      const navigate = useNavigate();
@@ -17,8 +17,6 @@ function LoginForm() {
 
      const { isLogin } = useSelector((state) => state.userList);
 
-     console.log(isLogin);
-
      const onLoginChangeHandler = (e) => {
           const { name, value } = e.target;
           setUser({ ...user, [name]: value });
@@ -28,20 +26,19 @@ function LoginForm() {
           e.preventDefault();
           if (user.email.trim() === "" || user.password.trim() === "") {
                alert("error");
+          } else {
+               dispatch(
+                    _postUserLogin({
+                         email: user.email,
+                         password: user.password,
+                    })
+               );
           }
-          dispatch(
-               _postUserLogin({ email: user.email, password: user.password })
-          );
-          console.log(isLogin);
+          //console.log(isLogin);
      };
-
+     //console.log("테스트:", isLogin);
      useEffect(() => {
-          if (isLogin) {
-               navigate("/main");
-          }
-          if (!isLogin) {
-               navigate("/");
-          }
+          isLogin && navigate("/main");
      }, [isLogin, navigate]);
 
      return (
