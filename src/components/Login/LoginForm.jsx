@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import LogoImg from "../../img/s1ack.png";
 
 function LoginForm() {
      return (
