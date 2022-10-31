@@ -1,6 +1,49 @@
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { _postUserLogin } from "../../redux/modules/userSlice";
 
 function LoginForm() {
+     const navigate = useNavigate();
+     const dispatch = useDispatch();
+
+     const initialState = {
+          email: "",
+          password: "",
+     };
+
+     const [user, setUser] = useState(initialState);
+
+     const { isLogin } = useSelector((state) => state.userList);
+
+     console.log(isLogin);
+
+     const onLoginChangeHandler = (e) => {
+          const { name, value } = e.target;
+          setUser({ ...user, [name]: value });
+     };
+
+     const onSubmitLoginHandler = (e) => {
+          e.preventDefault();
+          if (user.email.trim() === "" || user.password.trim() === "") {
+               alert("error");
+          }
+          dispatch(
+               _postUserLogin({ email: user.email, password: user.password })
+          );
+          console.log(isLogin);
+     };
+
+     useEffect(() => {
+          if (isLogin) {
+               navigate("/main");
+          }
+          if (!isLogin) {
+               navigate("/");
+          }
+     }, [isLogin, navigate]);
+
      return (
           <StyleLogin>
                <h2>이메일로 로그인 해보세요</h2>
@@ -9,9 +52,21 @@ function LoginForm() {
                     추천드려요.
                </p>
                <form>
-                    <input type="email" placeholder="name@work-mail.com" />
-                    <input type="password" placeholder="password" />
-                    <button>이메일로 로그인</button>
+                    <input
+                         type="email"
+                         placeholder="name@work-mail.com"
+                         name="email"
+                         onChange={onLoginChangeHandler}
+                    />
+                    <input
+                         type="password"
+                         placeholder="password"
+                         name="password"
+                         onChange={onLoginChangeHandler}
+                    />
+                    <button onClick={onSubmitLoginHandler}>
+                         이메일로 로그인
+                    </button>
                </form>
           </StyleLogin>
      );

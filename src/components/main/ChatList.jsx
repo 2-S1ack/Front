@@ -45,14 +45,13 @@ const ChatList = () => {
                               </button>
                               <span>유저3</span>
                          </div>
-                         <div className="team-line-style">
-                              <button
-                                   onClick={() => {
-                                        setAddPlayer(!addPlayer);
-                                   }}
-                              >
-                                   <IoIosAdd className="plus-team-style" />
-                              </button>
+                         <div
+                              className="team-line-style"
+                              onClick={() => {
+                                   setAddPlayer(!addPlayer);
+                              }}
+                         >
+                              <IoIosAdd className="plus-team-style" />
                               <span>팀원 추가</span>
                          </div>
                     </details>
