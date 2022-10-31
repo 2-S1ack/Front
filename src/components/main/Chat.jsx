@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import ChatList from "./ChatList";
 import {
@@ -15,8 +15,82 @@ import { BiCodeBlock, BiCodeAlt } from "react-icons/bi";
 import { BsCameraVideo, BsEmojiSmile } from "react-icons/bs";
 import { MdAlternateEmail, MdTextFormat } from "react-icons/md";
 import { IoIosAdd, IoMdSend, IoMdPerson } from "react-icons/io";
+import {useDispatch, useSelector} from "react-redux"
+import { __getRoomList, __getUserChatList } from "../../redux/modules/room";
 
-const Chat = () => {
+import StompJS from "stompjs"
+import SockJS from "sockjs-client";
+
+const Chat = (props) => {
+     const dispatch = useDispatch();
+
+      //방 정보인데 수정 필요할듯
+     const {roomInfo} = props;
+     const roomId = roomInfo.roomId;
+     const headers = {
+          "Authorization": sessionStorage.getItem("token")
+     };
+     const [message, setMessage] = useState("");
+
+     //룸 리스트 가져오기
+     // const roomList = useSelector((state) => state.room.lists)
+
+     // 채팅 로그
+     // const chattingList = useSelector((state) => state.chatList.list);
+
+     // useEffect(() => {
+     //      dispatch(__getRoomList(roomId));
+     //      connect();
+     // }, [roomId])
+
+     // 클라이언트 객체 생성
+     // const sock = new SockJS("/chat")
+     // const client = StompJS.over(sock);
+
+
+     // const connect = () => {
+     //      client.connect(headers, onConnected, onError);
+     // }
+
+     // const onConnected = () => {
+     //      client.subscribe(`/sub/api/chat/room/${roomId}`,
+     //           function (content) {
+     //                if (content.body) {
+     //                     const new_Message = JSON.parse(content.body);
+     //                     dispatch(__getUserChatList(new_Message));
+     //                } else {
+     //                     alert("메세지를 입력하세요");   
+     //                } 
+     //           }, headers
+     //      )
+     // }
+
+     // const onError = (err) => {
+     //      console.log(err)
+     // }
+
+     // const chatUserInfo = (list) => {
+     //      userInfo({
+     //          username: list.username,
+     //      })
+     //  }
+
+     // const sendMessage = () => {
+     //      client.send(`/pub/api/chat/message/${roomId}`, headers, JSON.stringify({
+     //           content: "",
+     //           desUsername: ""
+     //      }))
+     //      setMessage();
+     // }
+
+     // const onEnterPress = (e) => {
+     //      if (e.key == "Enter") {
+     //           sendMessage();
+     //      }
+     // }
+     
+     // client.activate();
+  
      return (
           <ChatScreen>
                <ChatList />
@@ -28,20 +102,14 @@ const Chat = () => {
                               </div>
                               <span>대화 상대</span>
                          </ChatUserNav>
-                         <ChatLog>
-                              <div className="log-text-style">
-                                   <div>
-                                        <IoMdPerson className="user-style" />
+                              <ChatLog>
+                                   <div className="log-text-style">
+                                        <div>
+                                             <IoMdPerson className="user-style" />
+                                        </div>
+                                        <span></span>
                                    </div>
-                                   <span>ㅋㅋ</span>
-                              </div>
-                              <div className="log-text-style">
-                                   <div>
-                                        <IoMdPerson className="user-style" />
-                                   </div>
-                                   <span>ㅋㅋ</span>
-                              </div>
-                         </ChatLog>
+                              </ChatLog>
                          <ChatInputWrap>
                               <div className="chat-input-style">
                                    <ChatHeader>
@@ -74,8 +142,11 @@ const Chat = () => {
                                         </button>
                                    </ChatHeader>
                                    <ChatInput
+                                        // value={message}
                                         type="text"
                                         placeholder="내용을 입력해주세요."
+                                        // onEnterPress={onEnterPress}
+                                        // onChange={(e) => {setMessage(e.target.value)}}
                                    />
                                    <ChatFooter>
                                         <div>
