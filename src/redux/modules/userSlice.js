@@ -9,8 +9,7 @@ const initialState = {
      isLogin: false,
 };
 
-export const _postEmailCheck = createAsyncThunk(
-     "emailCheck",
+export const _postEmailCheck = createAsyncThunk("emailCheck",
      async (payload, thunkAPI) => {
           try {
                console.log(payload);

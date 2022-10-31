@@ -46,14 +46,14 @@ const ChatList = () => {
                               <span>유저3</span>
                          </div>
                          <div className="team-line-style">
-                              <button
-                                   onClick={() => {
-                                        setAddPlayer(!addPlayer);
-                                   }}
-                              >
+                              <button>
                                    <IoIosAdd className="plus-team-style" />
                               </button>
-                              <span>팀원 추가</span>
+                              <span onClick={() => {
+                                        setAddPlayer(!addPlayer)
+                                   }}>
+                                        팀원 추가
+                              </span>
                          </div>
                     </details>
                </DirectWrap>
