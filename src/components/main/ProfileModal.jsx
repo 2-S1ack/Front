@@ -10,9 +10,7 @@ const ProfileModal = () => {
                          <span>🟢 대화 가능</span>
                     </div>
                </MyProfileImg>
-               <ProfileState>
-                    😊 상태 업데이트
-               </ProfileState>
+               <ProfileState>😊 상태 업데이트</ProfileState>
                <StateChange>
                     <span>자신을 자리비움(으)로 설정</span>
                     <span>알림 일시 중지</span>
@@ -28,14 +26,14 @@ const ProfileModal = () => {
                </LogOut>
           </MyprofileWrap>
      );
-}
+};
 
 export default ProfileModal;
 
 const MyprofileWrap = styled.div`
      width: 250px;
      height: 315px;
-     background-color: #F8F8F8;
+     background-color: #f8f8f8;
      position: fixed;
      z-index: 1;
      top: 40px;
@@ -52,7 +50,7 @@ const MyProfileImg = styled.div`
      height: 50px;
      display: flex;
      align-items: center;
-     margin:15px 20px;
+     margin: 15px 20px;
      img {
           width: 40px;
           height: 40px;
@@ -64,7 +62,7 @@ const MyProfileImg = styled.div`
           align-items: center;
           flex-direction: column;
           span:first-child {
-               margin:0 auto 0 0;
+               margin: 0 auto 0 0;
                font-size: 16px;
           }
           span:last-child {

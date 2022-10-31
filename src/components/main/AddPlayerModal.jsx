@@ -37,7 +37,7 @@ export default AddPlayerModal;
 
 const AddPlayerOverlay = styled.div`
      background-color: rgba(0, 0, 0, 0.6);
-     z-index: 0;
+     z-index: 1;
      position: fixed;
      top: 0;
      left: 0;
@@ -53,7 +53,7 @@ const AddPlayerWrap = styled.div`
      position: fixed;
      top: 22%;
      left: 40%;
-     z-index: 1;
+     z-index: 2;
      background-color: rgb(255, 255, 255);
 `;
 

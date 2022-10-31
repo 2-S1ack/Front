@@ -45,6 +45,7 @@ const ChatList = () => {
                               </button>
                               <span>유저3</span>
                          </div>
+
                          <div className="team-line-style">
                               <button>
                                    <IoIosAdd className="plus-team-style" />

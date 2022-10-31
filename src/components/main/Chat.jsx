@@ -311,6 +311,7 @@ const ChatHeader = styled.div`
           background-color: var(--color-chatinput-header-btn);
           height: 20px;
           width: 1px;
+          z-index: 0;
      }
 `;
 
@@ -354,6 +355,7 @@ const ChatFooter = styled.div`
      button:nth-child(2)::after,
      button:nth-child(4)::after {
           position: absolute;
+          z-index: 0;
           left: -5px;
           content: "";
           flex-grow: 1;
