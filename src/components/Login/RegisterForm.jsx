@@ -1,7 +1,35 @@
-import React from "react";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { _postEmailCheck } from "../../redux/modules/userSlice";
 
 function RegisterForm() {
+     const dispatch = useDispatch();
+     const navigate = useNavigate();
+     const initialState = {
+          email: "",
+          username: "",
+          password: "",
+          passwordConfirm: "",
+     };
+     const [user, setUser] = useState(initialState);
+
+     const { email, username, password, passwordConfirm } = user;
+
+     const onChangeSignupHandler = (e) => {
+          const { name, value } = e.target;
+          setUser({ ...user, [name]: value });
+          console.log(e.target.value);
+     };
+
+     const onEmailDoubleChkHandler = () => {
+          if (user.email.trim() === "") {
+               alert("아이디체크");
+          } else {
+               dispatch(_postEmailCheck({ email: email }));
+          }
+     };
      return (
           <StyleRegister>
                <h2>이메일로 회원가입을 해주세요</h2>
@@ -11,25 +39,44 @@ function RegisterForm() {
                </p>
                <form>
                     <div>
-                         <input type="email" placeholder="name@work-mail.com" />
-                         <button type="button">중복확인</button>
+                         <input
+                              type="email"
+                              name="email"
+                              placeholder="name@work-mail.com"
+                              onChange={onChangeSignupHandler}
+                         />
+                         <button
+                              type="button"
+                              onClick={onEmailDoubleChkHandler}
+                         >
+                              중복확인
+                         </button>
                     </div>
                     <div>
-                         <input type="tetx" placeholder="이름을 입력헤주세요" />
+                         <input
+                              type="text"
+                              name="username"
+                              placeholder="이름을 입력헤주세요"
+                              onChange={onChangeSignupHandler}
+                         />
                          <button type="button">중복확인</button>
                     </div>
                     <div>
                          <input
                               className="pass-input"
                               type="password"
+                              name="password"
                               placeholder="password"
+                              onChange={onChangeSignupHandler}
                          />
                     </div>
                     <div>
                          <input
                               className="pass-input"
                               type="password"
+                              name="passwordConfirm"
                               placeholder="password check"
+                              onChange={onChangeSignupHandler}
                          />
                     </div>
                     <button className="signup">회원가입</button>

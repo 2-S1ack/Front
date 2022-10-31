@@ -1,16 +1,21 @@
 import React from "react";
 import styled from "styled-components";
 
-const AddPlayerModal = ({hide}) => {
-     return(
-          <>   <AddPlayerOverlay />
+const AddPlayerModal = ({ hide }) => {
+     return (
+          <>
+               {" "}
+               <AddPlayerOverlay />
                <AddPlayerWrap>
                     <Header>
                          <span>사용자 초대</span>
                          <button onClick={hide}>❌</button>
                     </Header>
                     <InviteUserForm>
-                         <input type="text" placeholder="초대할 아이디를 입력하세요" />
+                         <input
+                              type="text"
+                              placeholder="초대할 아이디를 입력하세요"
+                         />
                          <button>초대</button>
                          {/* <button onClick={() => {setAddPlayer(addPlayer)}}>초대</button> */}
                     </InviteUserForm>
@@ -26,7 +31,7 @@ const AddPlayerModal = ({hide}) => {
                </AddPlayerWrap>
           </>
      );
-}
+};
 
 export default AddPlayerModal;
 
@@ -46,7 +51,7 @@ const AddPlayerWrap = styled.div`
      border: 1px solid gray;
      border-radius: 5px;
      position: fixed;
-     top:22%;
+     top: 22%;
      left: 40%;
      z-index: 1;
      background-color: rgb(255, 255, 255);
@@ -59,7 +64,7 @@ const Header = styled.div`
      justify-content: space-between;
      align-items: center;
      span {
-          margin:0px 20px;
+          margin: 0px 20px;
      }
      button {
           margin: 0px 20px;

@@ -226,7 +226,7 @@ const ChatHeader = styled.div`
           justify-content: flex-start;
           font-size: 18px;
           padding: 5px;
-          position: relative;
+          position: relative; //이것때문에 모달이 어두워져도 계속 보임
           margin-left: 5px;
      }
 
@@ -237,7 +237,6 @@ const ChatHeader = styled.div`
           position: absolute;
           left: -5px;
           content: "";
-          flex-grow: 1;
           background-color: var(--color-chatinput-header-btn);
           height: 20px;
           width: 1px;
