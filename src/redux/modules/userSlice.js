@@ -92,6 +92,12 @@ const userList = createSlice({
           loginState: (state) => {
                state.isLogin = true;
           },
+          emailChkChange: (state) => {
+               state.isEmailCheck = false;
+          },
+          nameChkChange: (state) => {
+               state.isNameCheck = false;
+          },
      },
      extraReducers: {
           [_postUserJoin.pending]: (state) => {
@@ -99,7 +105,6 @@ const userList = createSlice({
           },
           [_postUserJoin.fulfilled]: (state, action) => {
                state.isLoading = false;
-               alert("가입이 완료 되셨습니다!");
           },
           [_postUserJoin.rejected]: (state, action) => {
                state.isLoading = false;
@@ -110,7 +115,7 @@ const userList = createSlice({
                console.log(action.payload.data);
                if (action.payload.data.success === true) {
                     state.isEmailCheck = true;
-                    alert("중복된 이메일이 존재하지 않습니다.");
+                    alert("사용가능한 이메일 입니다.");
                }
                if (!action.payload.data.success) {
                     state.isEmailCheck = false;
@@ -122,7 +127,7 @@ const userList = createSlice({
                //console.log(action.payload.data);
                if (action.payload.data.success === true) {
                     state.isNameCheck = true;
-                    alert("중복된 이름이 존재하지 않습니다.");
+                    alert("사용가능한 이름입니다.");
                }
                if (!action.payload.data.success) {
                     state.isNameCheck = false;
@@ -153,5 +158,5 @@ const userList = createSlice({
      },
 });
 
-export const { loginState } = userList.actions;
+export const { loginState, nameChkChange, emailChkChange } = userList.actions;
 export default userList.reducer;
