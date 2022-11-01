@@ -10,9 +10,11 @@ const initialState = {
      isLogin: false,
 };
 
+
 //이메일 중복확인
 export const _postEmailCheck = createAsyncThunk(
      "emailCheck",
+
      async (payload, thunkAPI) => {
           try {
                console.log(payload);
