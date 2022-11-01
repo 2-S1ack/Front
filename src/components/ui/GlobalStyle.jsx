@@ -54,6 +54,7 @@ const GlobalStyle = createGlobalStyle`
 
     html{
         --color-login-btn:#4a154b;
+        --color-login-btn-hover:#703578;
         --color-background: #350d36;
         --color-bright-violet: #5d3d5e;
         --color-status:#2bac76;

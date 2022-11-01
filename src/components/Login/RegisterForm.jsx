@@ -26,15 +26,19 @@ function RegisterForm() {
      //정규식 체크
      const [emailChk, setEmailChk] = useState(false);
      const [unChk, setUnChk] = useState(false);
-     // const [pwChk, setPwChk] = useState(false);
-     // const [pwConfirmChk, setPwConfirmChk] = useState(false);
 
-     //상태관리를 위한
+     //중복확인 버튼 전역상태관리
+     const { isEmailCheck, isNameCheck } = useSelector(
+          (state) => state.userList
+     );
+
+     //정규식 관련 체크
      const [emInput, setEmInput] = useState("");
      const [pwInput, setPwInput] = useState("");
      const [pwCfmInput, setPwCfmInput] = useState("");
      const [umInput, setUmInput] = useState("");
 
+     //입력 값의 true/false에 따라 회원가입 버튼 활성화 관련
      const [disabled, setDisabled] = useState(false);
 
      //정규식
@@ -43,7 +47,7 @@ function RegisterForm() {
      const regPassword = /^[A-Za-z0-9]{8,16}$/;
      const regUsername = /^[ㄱ-ㅎ|가-힣]{2,8}$/;
 
-     //입력값
+     //입력값(정규식 내용 호출)
      const onChangeSignupHandler = (e) => {
           const { name, value } = e.target;
           setUser({ ...user, [name]: value });
@@ -73,11 +77,9 @@ function RegisterForm() {
      //이메일 중복확인
      const onEmailDbChkHandler = () => {
           if (user.email.trim() === "") {
-               setEmailChk(false);
-               alert("이메일");
+               alert("다시쓰셈");
           } else {
                dispatch(_postEmailCheck({ email }));
-               setEmailChk(true);
           }
      };
 
@@ -109,10 +111,6 @@ function RegisterForm() {
                password !== passwordConfirm
           ) {
                setDisabled(false);
-          } else if (!emailChk) {
-               setDisabled(false);
-          } else if (!unChk) {
-               setDisabled(false);
           } else {
                dispatch(
                     _postUserJoin({
@@ -128,12 +126,15 @@ function RegisterForm() {
           }
      };
 
+     //회원가입 버튼 disabled 삼항 연산자
      useEffect(() => {
           setDisabled(
                regEmail.test(email) &&
                     regUsername.test(username) &&
                     regPassword.test(password) &&
-                    password === passwordConfirm
+                    password === passwordConfirm &&
+                    isEmailCheck &&
+                    isNameCheck
           );
      }, [
           setDisabled,
@@ -144,39 +145,35 @@ function RegisterForm() {
           email,
           username,
           passwordConfirm,
+          isEmailCheck,
+          isNameCheck,
      ]);
-     //console.log(regPassword.test(password));
+
+     //true/false 체크
+     // console.log(
+     //      regEmail.test(email),
+     //      regUsername.test(username),
+     //      regPassword.test(password),
+     //      password === passwordConfirm,
+     //      isEmailCheck,
+     //      isNameCheck
+     // );
+
+     //state가 변경되었을 때 -> 중복확인 check 초기화
      useEffect(() => {
           if (!regEmail.test(email)) {
                setEmailChk(false);
           }
           dispatch(emailChkChange());
-     }, [email, regEmail, dispatch]);
+     }, [email]);
 
      useEffect(() => {
           if (!regUsername.test(username)) {
                setUnChk(false);
           }
           dispatch(nameChkChange());
-     }, [username, regUsername, dispatch]);
+     }, [username]);
 
-     // useEffect(() => {
-     //      if (regEmail.test(email)) {
-     //           setEmailChk(true);
-     //      } else {
-     //           setEmailChk(false);
-     //      }
-     //      dispatch(emailChkChange());
-     // }, [email, regEmail, dispatch]);
-
-     // useEffect(() => {
-     //      if (regUsername.test(username)) {
-     //           setUnChk(true);
-     //      } else {
-     //           setUnChk(false);
-     //      }
-     //      dispatch(nameChkChange());
-     // }, [username, regUsername, dispatch]);
      return (
           <StyleRegister>
                <h2>이메일로 회원가입을 해주세요</h2>
@@ -197,8 +194,8 @@ function RegisterForm() {
                               type="button"
                               onClick={onEmailDbChkHandler}
                               className={
-                                   emailChk
-                                        ? "double-check-btn-true "
+                                   isEmailCheck
+                                        ? "double-check-btn-true"
                                         : "double-check-btn"
                               }
                          >
@@ -218,7 +215,7 @@ function RegisterForm() {
                               type="button"
                               onClick={onUserDbChkHandler}
                               className={
-                                   unChk
+                                   isNameCheck
                                         ? "double-check-btn-true "
                                         : "double-check-btn"
                               }
@@ -250,14 +247,14 @@ function RegisterForm() {
                     </div>
                     <p className="help-join">{pwCfmInput}</p>
                     {disabled ? (
-                         <button className="signup">회원가입</button>
-                    ) : (
                          <button
-                              className="signope"
+                              className="signup"
                               onClick={onSubmitJoinHandler}
                          >
                               회원가입
                          </button>
+                    ) : (
+                         <button className="signope">회원가입</button>
                     )}
                </div>
                <div className="use-s1ack">
