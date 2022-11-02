@@ -94,6 +94,9 @@ const userList = createSlice({
           loginState: (state) => {
                state.isLogin = true;
           },
+          logoutState: (state) => {
+               state.isLogin = false;
+          }
      },
      extraReducers: {
           [_postUserJoin.pending]: (state) => {
@@ -155,5 +158,5 @@ const userList = createSlice({
      },
 });
 
-export const { loginState } = userList.actions;
+export const { loginState, logoutState } = userList.actions;
 export default userList.reducer;

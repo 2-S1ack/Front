@@ -22,6 +22,8 @@ function LoginForm() {
           setUser({ ...user, [name]: value });
      };
 
+    
+
      const onSubmitLoginHandler = (e) => {
           e.preventDefault();
           if (user.email.trim() === "" || user.password.trim() === "") {
