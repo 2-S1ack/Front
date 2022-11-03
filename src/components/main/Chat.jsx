@@ -1,11 +1,82 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import ChatList from "./ChatList";
-import ChatBox from "./ChatBox";
-import {IoMdPerson } from "react-icons/io";
-import { useDispatch } from "react-redux";
 
-const Chat = () => {
+import { IoMdPerson } from "react-icons/io";
+
+import StompJS from "stompjs";
+import SockJS from "sockjs-client";
+
+import ChatBox from "./ChatBox";
+import ChatList from "./ChatList";
+
+const Chat = (props) => {
+     //  const dispatch = useDispatch();
+
+     //  //방 정보인데 수정 필요할듯
+     //  const { roomInfo } = props;
+     //  const roomId = roomInfo.roomId;
+     //  const headers = {
+     //       Authorization: sessionStorage.getItem("token"),
+     //  };
+     //  const [message, setMessage] = useState("");
+
+     //룸 리스트 가져오기
+     // const roomList = useSelector((state) => state.room.lists)
+
+     // 채팅 로그
+     // const chattingList = useSelector((state) => state.chatList.list);
+
+     // useEffect(() => {
+     //      dispatch(__getRoomList(roomId));
+     //      connect();
+     // }, [roomId])
+
+     // 클라이언트 객체 생성
+     // const sock = new SockJS("/chat")
+     // const client = StompJS.over(sock);
+
+     // const connect = () => {
+     //      client.connect(headers, onConnected, onError);
+     // }
+
+     // const onConnected = () => {
+     //      client.subscribe(`/sub/api/chat/room/${roomId}`,
+     //           function (content) {
+     //                if (content.body) {
+     //                     const new_Message = JSON.parse(content.body);
+     //                     dispatch(__getUserChatList(new_Message));
+     //                } else {
+     //                     alert("메세지를 입력하세요");
+     //                }
+     //           }, headers
+     //      )
+     // }
+
+     // const onError = (err) => {
+     //      console.log(err)
+     // }
+
+     // const chatUserInfo = (list) => {
+     //      userInfo({
+     //          username: list.username,
+     //      })
+     //  }
+
+     // const sendMessage = () => {
+     //      client.send(`/pub/api/chat/message/${roomId}`, headers, JSON.stringify({
+     //           content: "",
+     //           desUsername: ""
+     //      }))
+     //      setMessage();
+     // }
+
+     // const onEnterPress = (e) => {
+     //      if (e.key == "Enter") {
+     //           sendMessage();
+     //      }
+     // }
+
+     // client.activate();
 
      return (
           <ChatScreen>
@@ -18,18 +89,18 @@ const Chat = () => {
                               </div>
                               <span>대화 상대</span>
                          </ChatUserNav>
-                              <ChatLog>
-                                   <div className="log-text-style">
-                                        <ChatUserInfo>
-                                             <IoMdPerson className="user-style" />
-                                             <Useranme>
-                                                  <p>이름</p>
-                                                  <p>내용</p>
-                                             </Useranme>
-                                        </ChatUserInfo>
-                                   </div>
-                              </ChatLog>
-                              <ChatBox />
+                         <ChatLog>
+                              <div className="log-text-style">
+                                   <ChatUserInfo>
+                                        <IoMdPerson className="user-style" />
+                                        <Useranme>
+                                             <p>이름</p>
+                                             <p>내용</p>
+                                        </Useranme>
+                                   </ChatUserInfo>
+                              </div>
+                         </ChatLog>
+                         <ChatBox />
                     </UserChat>
                </UserchatWrap>
           </ChatScreen>
@@ -116,6 +187,4 @@ const ChatUserInfo = styled.div`
      display: flex;
 `;
 
-const Useranme = styled.div`
-     
-`;
+const Useranme = styled.div``;

@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import {
+     emailChkChange,
+     nameChkChange,
      _postEmailCheck,
      _postNameCheck,
      _postUserJoin,
@@ -24,22 +26,28 @@ function RegisterForm() {
      //정규식 체크
      const [emailChk, setEmailChk] = useState(false);
      const [unChk, setUnChk] = useState(false);
-     const [pwChk, setPwChk] = useState(false);
-     const [pwConfirmChk, setPwConfirmChk] = useState(false);
 
-     //상태관리를 위한
+     //중복확인 버튼 전역상태관리
+     const { isEmailCheck, isNameCheck } = useSelector(
+          (state) => state.userList
+     );
+
+     //정규식 관련 체크
      const [emInput, setEmInput] = useState("");
      const [pwInput, setPwInput] = useState("");
      const [pwCfmInput, setPwCfmInput] = useState("");
      const [umInput, setUmInput] = useState("");
 
+     //입력 값의 true/false에 따라 회원가입 버튼 활성화 관련
+     const [disabled, setDisabled] = useState(false);
+
      //정규식
      const regEmail =
           /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/;
-     const regPassword = /^(?=.[A-Za-z])(?=.\\d)[A-Za-z\\d@$!%*#?&]{8,16}$/;
+     const regPassword = /^[A-Za-z0-9]{8,16}$/;
      const regUsername = /^[ㄱ-ㅎ|가-힣]{2,8}$/;
 
-     //입력값
+     //입력값(정규식 내용 호출)
      const onChangeSignupHandler = (e) => {
           const { name, value } = e.target;
           setUser({ ...user, [name]: value });
@@ -47,41 +55,45 @@ function RegisterForm() {
           if (name === "email") {
                !regEmail.test(value)
                     ? setEmInput("이메일 형식을 확인해주세요")
-                    : setEmInput(" ");
+                    : setEmInput("");
           }
           if (name === "username") {
                !regUsername.test(value)
                     ? setUmInput("2-8글자 이내의 한글로 입력해주세요")
-                    : setUmInput(" ");
+                    : setUmInput("");
           }
           if (name === "password") {
                !regPassword.test(value)
                     ? setPwInput("8~16자의 영문 대소문자와 숫자로 입력해주세요")
-                    : setPwInput(" ");
+                    : setPwInput("");
           }
           if (name === "passwordConfirm") {
                password !== value
                     ? setPwCfmInput("비밀번호가 불일치 합니다")
-                    : setPwCfmInput(" ");
+                    : setPwCfmInput("");
           }
      };
 
      //이메일 중복확인
      const onEmailDbChkHandler = () => {
           if (user.email.trim() === "") {
-               alert("이메일");
+               alert("다시쓰셈");
           } else {
                dispatch(_postEmailCheck({ email }));
           }
      };
+
      //닉네임 중복확인
      const onUserDbChkHandler = () => {
           if (user.username.trim() === "") {
+               setUnChk(false);
                alert("이름");
           } else {
                dispatch(_postNameCheck({ username }));
+               setUnChk(true);
           }
      };
+
      //회원가입보내기
      const onSubmitJoinHandler = (e) => {
           e.preventDefault();
@@ -92,11 +104,75 @@ function RegisterForm() {
                passwordConfirm.trim() === ""
           ) {
                return alert("빈 칸을 입력해주세요");
+          } else if (
+               !regEmail.test(email) ||
+               !regUsername.test(username) ||
+               !regPassword.test(password) ||
+               password !== passwordConfirm
+          ) {
+               setDisabled(false);
+          } else {
+               dispatch(
+                    _postUserJoin({
+                         email,
+                         password,
+                         passwordConfirm,
+                         username,
+                    })
+               );
+               setDisabled(true);
+               alert("가입이 완료 되셨습니다!");
+               navigate("/");
           }
-          dispatch(
-               _postUserJoin({ email, password, passwordConfirm, username })
-          );
      };
+
+     //회원가입 버튼 disabled 삼항 연산자
+     useEffect(() => {
+          setDisabled(
+               regEmail.test(email) &&
+                    regUsername.test(username) &&
+                    regPassword.test(password) &&
+                    password === passwordConfirm &&
+                    isEmailCheck &&
+                    isNameCheck
+          );
+     }, [
+          setDisabled,
+          regEmail,
+          regPassword,
+          regUsername,
+          password,
+          email,
+          username,
+          passwordConfirm,
+          isEmailCheck,
+          isNameCheck,
+     ]);
+
+     //true/false 체크
+     // console.log(
+     //      regEmail.test(email),
+     //      regUsername.test(username),
+     //      regPassword.test(password),
+     //      password === passwordConfirm,
+     //      isEmailCheck,
+     //      isNameCheck
+     // );
+
+     //state가 변경되었을 때 -> 중복확인 check 초기화
+     useEffect(() => {
+          if (!regEmail.test(email)) {
+               setEmailChk(false);
+          }
+          dispatch(emailChkChange());
+     }, [email]);
+
+     useEffect(() => {
+          if (!regUsername.test(username)) {
+               setUnChk(false);
+          }
+          dispatch(nameChkChange());
+     }, [username]);
 
      return (
           <StyleRegister>
@@ -105,7 +181,7 @@ function RegisterForm() {
                     <b>직장에서 사용하는 이메일 주소</b>로 회원가입하는 걸
                     추천드려요.
                </p>
-               <form onSubmit={onSubmitJoinHandler}>
+               <div className="form-style">
                     <div>
                          <input
                               type="email"
@@ -114,7 +190,15 @@ function RegisterForm() {
                               placeholder="name@work-mail.com"
                               onChange={onChangeSignupHandler}
                          />
-                         <button type="button" onClick={onEmailDbChkHandler}>
+                         <button
+                              type="button"
+                              onClick={onEmailDbChkHandler}
+                              className={
+                                   isEmailCheck
+                                        ? "double-check-btn-true"
+                                        : "double-check-btn"
+                              }
+                         >
                               중복확인
                          </button>
                     </div>
@@ -124,10 +208,18 @@ function RegisterForm() {
                               type="text"
                               name="username"
                               value={username}
-                              placeholder="이름을 입력헤주세요"
+                              placeholder="이름을 입력해주세요"
                               onChange={onChangeSignupHandler}
                          />
-                         <button type="button" onClick={onUserDbChkHandler}>
+                         <button
+                              type="button"
+                              onClick={onUserDbChkHandler}
+                              className={
+                                   isNameCheck
+                                        ? "double-check-btn-true "
+                                        : "double-check-btn"
+                              }
+                         >
                               중복확인
                          </button>
                     </div>
@@ -154,8 +246,17 @@ function RegisterForm() {
                          />
                     </div>
                     <p className="help-join">{pwCfmInput}</p>
-                    <button className="signup">회원가입</button>
-               </form>
+                    {disabled ? (
+                         <button
+                              className="signup"
+                              onClick={onSubmitJoinHandler}
+                         >
+                              회원가입
+                         </button>
+                    ) : (
+                         <button className="signope">회원가입</button>
+                    )}
+               </div>
                <div className="use-s1ack">
                     <p>이미 s1ack을 사용하고 있나요?</p>
                     <a href="/">s1ack 로그인</a>
@@ -184,7 +285,7 @@ const StyleRegister = styled.div`
                font-weight: 600;
           }
      }
-     form {
+     .form-style {
           width: 100%;
           display: flex;
           flex-direction: column;
@@ -209,7 +310,7 @@ const StyleRegister = styled.div`
                     border: none;
                     outline: 3px solid cornflowerblue;
                }
-               button {
+               .double-check-btn {
                     width: 20%;
                     height: 48px;
                     color: var(--color-login-btn);
@@ -224,6 +325,17 @@ const StyleRegister = styled.div`
                     color: white;
                     background-color: var(--color-login-btn);
                     border: none;
+               }
+               .double-check-btn-true {
+                    width: 20%;
+                    height: 48px;
+                    color: white;
+                    background-color: var(--color-login-btn);
+                    border: none;
+                    font-weight: 800;
+                    border-radius: 3px;
+                    margin-left: 10px;
+                    cursor: pointer;
                }
                .pass-input {
                     width: 100%;
@@ -247,6 +359,18 @@ const StyleRegister = styled.div`
                font-size: 18px;
                color: white;
                background-color: var(--color-login-btn);
+               border: none;
+               border-radius: 3px;
+               cursor: pointer;
+          }
+          .signope {
+               width: 420px;
+               height: 44px;
+               padding: 0 16px 3px;
+               margin-bottom: 20px;
+               font-size: 18px;
+               color: white;
+               background-color: #888;
                border: none;
                border-radius: 3px;
                cursor: pointer;

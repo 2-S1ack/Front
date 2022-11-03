@@ -15,6 +15,7 @@ function LoginForm() {
 
      const [user, setUser] = useState(initialState);
 
+     //로그인 전역상태 불러오기
      const { isLogin } = useSelector((state) => state.userList);
 
      const onLoginChangeHandler = (e) => {
@@ -27,7 +28,7 @@ function LoginForm() {
      const onSubmitLoginHandler = (e) => {
           e.preventDefault();
           if (user.email.trim() === "" || user.password.trim() === "") {
-               alert("error");
+               alert("빈 칸을 입력해주세요");
           } else {
                dispatch(
                     _postUserLogin({
@@ -36,9 +37,9 @@ function LoginForm() {
                     })
                );
           }
-          //console.log(isLogin);
      };
-     //console.log("테스트:", isLogin);
+
+     //로그인할 때 -> main으로 이동
      useEffect(() => {
           isLogin && navigate("/main");
      }, [isLogin, navigate]);
@@ -117,13 +118,13 @@ const StyleLogin = styled.div`
                margin-bottom: 20px;
                font-size: 18px;
                color: white;
-               background-color: #4a154b;
+               background-color: var(--color-login-btn);
                border: none;
                border-radius: 3px;
                cursor: pointer;
           }
           button:hover {
-               background-color: #703578;
+               background-color: var(--color-login-btn-hover);
           }
      }
 `;

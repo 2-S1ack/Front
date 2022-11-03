@@ -1,4 +1,4 @@
-import Layout from "../components/ui/Layout";
+import LoginLayout from "../components/ui/LoginLayout";
 import Footer from "../components/ui/Footer";
 import LoginForm from "../components/login/LoginForm";
 import LoginHeader from "../components/ui/LoginHeader";
@@ -7,9 +7,9 @@ function Login() {
      return (
           <>
                <LoginHeader />
-               <Layout>
+               <LoginLayout>
                     <LoginForm />
-               </Layout>
+               </LoginLayout>
                <Footer />
           </>
      );

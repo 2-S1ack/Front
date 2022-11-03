@@ -1,32 +1,35 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import {logoutState} from "../../redux/modules/userSlice";
+import { logoutState } from "../../redux/modules/userSlice";
+import EditProfModal from "./EditProfModal";
 
 const ProfileModal = () => {
      const dispatch = useDispatch();
      const navigate = useNavigate();
-
+     const [modalOn, setModalOn] = useState(false);
      const onLogout = () => {
           sessionStorage.removeItem("authorization");
           sessionStorage.removeItem("refresh_token");
           sessionStorage.removeItem("userinfo");
-          dispatch(logoutState())
-          alert("로그아웃 됨")
-          navigate("/")
-     }
+          dispatch(logoutState());
+          alert("로그아웃 됨");
+          navigate("/");
+     };
+
+     const userinfo = JSON.parse(sessionStorage.getItem("userinfo"));
 
      useEffect(() => {
-          if (!sessionStorage.getItem("authorization")) dispatch(logoutState())
-     }, )
+          if (!sessionStorage.getItem("authorization")) dispatch(logoutState());
+     });
 
      return (
           <MyprofileWrap>
                <MyProfileImg>
                     <img src="/images/default.PNG" />
                     <div>
-                         <span>유저</span>
+                         <span>{userinfo.username}</span>
                          <span>🟢 대화 가능</span>
                     </div>
                </MyProfileImg>
@@ -37,7 +40,20 @@ const ProfileModal = () => {
                </StateChange>
                <hr></hr>
                <ProfileSetting>
-                    <span>프로필</span>
+                    <span
+                         onClick={() => {
+                              setModalOn(!modalOn);
+                         }}
+                    >
+                         프로필
+                    </span>
+                    {modalOn && (
+                         <EditProfModal
+                              hide={() => {
+                                   setModalOn(false);
+                              }}
+                         />
+                    )}
                     <span>환경 설정</span>
                </ProfileSetting>
                <hr></hr>
@@ -136,6 +152,6 @@ const LogOut = styled.div`
      align-items: center;
      margin: auto;
      &:hover {
-          background-color: rgba(0, 0, 0, 0.1)
+          background-color: rgba(0, 0, 0, 0.1);
      }
 `;

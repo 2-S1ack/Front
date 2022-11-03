@@ -10,14 +10,12 @@ const initialState = {
      isLogin: false,
 };
 
-
 //이메일 중복확인
 export const _postEmailCheck = createAsyncThunk(
      "emailCheck",
 
      async (payload, thunkAPI) => {
           try {
-               console.log(payload);
                const res = await axiosInstance.post(
                     "/api/member/duplication/email",
                     payload
@@ -91,50 +89,61 @@ const userList = createSlice({
      name: "userList",
      initialState,
      reducers: {
+          //로그인 상태 전역관리
           loginState: (state) => {
                state.isLogin = true;
           },
           logoutState: (state) => {
                state.isLogin = false;
-          }
+          },
+          //이메일 중복확인 전역관리(state 변경시 버튼 활성 초기화)
+          emailChkChange: (state) => {
+               state.isEmailCheck = false;
+          },
+          //이름 중복확인 전역관리(state 변경시 버튼 활성 초기화)
+          nameChkChange: (state) => {
+               state.isNameCheck = false;
+          },
      },
      extraReducers: {
+          //회원가입
           [_postUserJoin.pending]: (state) => {
                state.isLoading = true;
           },
           [_postUserJoin.fulfilled]: (state, action) => {
                state.isLoading = false;
-               alert("가입이 완료 되셨습니다!");
           },
           [_postUserJoin.rejected]: (state, action) => {
                state.isLoading = false;
                state.error = action.payload;
           },
+          //이메일 중복확인
           [_postEmailCheck.fulfilled]: (state, action) => {
                state.isLoading = false;
                console.log(action.payload.data);
                if (action.payload.data.success === true) {
                     state.isEmailCheck = true;
-                    alert("중복된 이메일이 존재하지 않습니다.");
+                    alert("사용가능한 이메일입니다.");
                }
                if (!action.payload.data.success) {
                     state.isEmailCheck = false;
                     alert("중복된 이메일이 존재합니다.");
                }
           },
+          //이름 중복확인
           [_postNameCheck.fulfilled]: (state, action) => {
                state.isLoading = false;
                //console.log(action.payload.data);
                if (action.payload.data.success === true) {
                     state.isNameCheck = true;
-                    alert("중복된 이름이 존재하지 않습니다.");
+                    alert("사용가능한 이름입니다.");
                }
                if (!action.payload.data.success) {
                     state.isNameCheck = false;
                     alert("중복된 이름이 존재합니다.");
                }
           },
-
+          //로그인
           [_postUserLogin.fulfilled]: (state, action) => {
                console.log("success", action.payload.success);
                state.isLoading = false;
@@ -146,17 +155,17 @@ const userList = createSlice({
                     );
                } else {
                     state.isLogin = false;
-                    alert("오류");
+                    alert("이메일이나 비밀번호를 확인해주세요");
                }
           },
           [_postUserLogin.rejected]: (state, action) => {
                state.isLoading = false;
                state.isLogin = false;
                state.error = action.payload;
-               alert("로그인 확인");
           },
      },
 });
 
-export const { loginState, logoutState } = userList.actions;
+export const { loginState, logoutState, nameChkChange, emailChkChange } =
+     userList.actions;
 export default userList.reducer;

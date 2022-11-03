@@ -1,7 +1,8 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { __addUser } from "../../redux/modules/room";
+import { AiOutlineClose } from "react-icons/ai";
 
 const AddPlayerModal = ({ hide }) => {
      const dispatch = useDispatch();
@@ -30,24 +31,34 @@ const AddPlayerModal = ({ hide }) => {
 
      return (
           <>
-               {" "}
                <AddPlayerOverlay />
                <AddPlayerWrap>
                     <Header>
-                         <span>사용자 초대</span>
-                         <button onClick={hide}>❌</button>
+                         <span>S1ack에 초대 요청</span>
+                         <button onClick={hide}>
+                              <AiOutlineClose />
+                         </button>
                     </Header>
                     <InviteUserForm>
+                         <p>받는 사람 :</p>
                          <input
+                              className="invite-fren-style"
                               type="text"
                               placeholder="초대할 아이디를 입력하세요"
                               // onChange={onChange}
                          />
-                         <button>초대</button>
+                         <button>요청 보내기</button>
+                         {/* <button onClick={() => {setAddPlayer(addPlayer)}}>초대</button> */}
                     </InviteUserForm>
-                    <hr></hr>
                     <UserList>
                          <p>사용자 리스트</p>
+                         <ul>
+                              <li>유저1</li>
+                              <li>유저2</li>
+                              <li>유저3</li>
+                              <li>유저4</li>
+                              <li>유저5</li>
+                         </ul>
                     </UserList>
                </AddPlayerWrap>
           </>
@@ -67,31 +78,46 @@ const AddPlayerOverlay = styled.div`
 `;
 
 const AddPlayerWrap = styled.div`
-     width: 500px;
-     height: 500px;
+     width: 650px;
+     height: 425px;
      border: 1px solid gray;
      border-radius: 5px;
      position: fixed;
-     top: 22%;
-     left: 40%;
+     /* top: 22%;
+     left: 40%; */
+     top: 44%;
+     left: 53%;
+     transform: translate(-50%, -50%);
      z-index: 2;
      background-color: rgb(255, 255, 255);
+     box-sizing: border-box;
+     display: flex;
+     flex-direction: column;
 `;
 
 const Header = styled.div`
+     position: relative;
      width: 100%;
-     height: 50px;
+     height: 70px;
      display: flex;
      justify-content: space-between;
      align-items: center;
+     padding: 20px 28px;
+     font-size: 22px;
+     box-sizing: border-box;
      span {
-          margin: 0px 20px;
+          font-weight: bolder;
      }
      button {
-          margin: 0px 20px;
+          width: 36px;
+          height: 36px;
           background: none;
           border: none;
           cursor: pointer;
+          font-size: 20px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
           &:hover {
                box-shadow: 0 0 5px black;
           }
@@ -99,32 +125,56 @@ const Header = styled.div`
 `;
 
 const InviteUserForm = styled.form`
-     width: 100%;
-     height: 40px;
+     width: 98%;
+     height: 17%;
      display: flex;
-     align-items: center;
-     justify-content: space-between;
-     margin: 20px 0px;
-     input {
-          width: 75%;
-          height: 30px;
-          margin: 0px 20px;
+     flex-direction: column;
+     align-items: flex-start;
+     padding: 0 28px;
+     box-sizing: border-box;
+     position: relative;
+     p {
+          font-size: 15px;
+          font-weight: bold;
+          padding-bottom: 8px;
+     }
+     .invite-fren-style {
+          width: 100%;
+          height: 40px;
+          padding: 10px;
           border-radius: 5px;
+          box-sizing: border-box;
      }
      button {
-          margin: 0px 20px;
-          width: 50px;
-          height: 30px;
+          position: absolute;
+          height: 36px;
+          bottom: -265px;
+          padding: 0 10px;
+          right: 0;
+          background-color: #dddddd;
+          color: #4d4c4d;
+          border: none;
+          border-radius: 5px;
+          font-weight: bold;
      }
 `;
 
 const UserList = styled.div`
-     width: 100%;
-     height: 70%;
+     width: cac(100%-28px);
+     height: 33%;
+     padding: 10px 28px;
+     margin-right: 10px;
      p {
-          margin: 20px;
+          font-size: 15px;
+          font-weight: bold;
+          padding: 10px 0;
      }
-     li {
-          margin: 20px;
+     ul {
+          height: 100%;
+          overflow-y: scroll;
+          padding: 0 10px;
+          li {
+               padding: 5px 0;
+          }
      }
 `;
