@@ -93,6 +93,9 @@ const userList = createSlice({
           loginState: (state) => {
                state.isLogin = true;
           },
+          logoutState: (state) => {
+               state.isLogin = false;
+          }
           //이메일 중복확인 전역관리(state 변경시 버튼 활성 초기화)
           emailChkChange: (state) => {
                state.isEmailCheck = false;
@@ -163,5 +166,5 @@ const userList = createSlice({
      },
 });
 
-export const { loginState, nameChkChange, emailChkChange } = userList.actions;
+export const { loginState, logoutState, nameChkChange, emailChkChange } = userList.actions;
 export default userList.reducer;

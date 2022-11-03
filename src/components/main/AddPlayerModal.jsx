@@ -1,8 +1,34 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
+import { __addUser } from "../../redux/modules/room";
 import { AiOutlineClose } from "react-icons/ai";
 
 const AddPlayerModal = ({ hide }) => {
+     const dispatch = useDispatch();
+     // const {chatRoom} = useSelector((state) => state.channel)
+     const [inviteUser, setInviteUser] = useState("");
+
+     // 채널 추가하기(유저초대)
+     // const addUser = (e) => {
+     //      e.preventDefault();
+     //      dispatch(__addUser())
+     // }
+
+     // const onChange = (e) => {
+     //      e.preventDefault();
+     //      setInviteUser(e.target.value);
+     // }
+
+     // const onInviteUser = (e) => {
+     //      e.preventDefault();
+     //      dispatch(__addUser(inviteUser))
+     // }
+
+     // useEffect(() => {
+     //      dispatch(__addUser())
+     // })
+
      return (
           <>
                <AddPlayerOverlay />
@@ -19,6 +45,7 @@ const AddPlayerModal = ({ hide }) => {
                               className="invite-fren-style"
                               type="text"
                               placeholder="초대할 아이디를 입력하세요"
+                              // onChange={onChange}
                          />
                          <button>요청 보내기</button>
                          {/* <button onClick={() => {setAddPlayer(addPlayer)}}>초대</button> */}

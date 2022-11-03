@@ -1,10 +1,26 @@
-import { useState } from "react";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import EditProfModal from "./EditProfModal";
+import { logoutState } from "../../redux/modules/userSlice";
 
 const ProfileModal = () => {
-     const [modalOn, setModalOn] = useState(false);
-     const userinfo = JSON.parse(sessionStorage.getItem("userinfo"));
+     const dispatch = useDispatch();
+     const navigate = useNavigate();
+
+     const onLogout = () => {
+          sessionStorage.removeItem("authorization");
+          sessionStorage.removeItem("refresh_token");
+          sessionStorage.removeItem("userinfo");
+          dispatch(logoutState());
+          alert("로그아웃 됨");
+          navigate("/");
+     };
+
+     useEffect(() => {
+          if (!sessionStorage.getItem("authorization")) dispatch(logoutState());
+     });
+
      return (
           <MyprofileWrap>
                <MyProfileImg>
@@ -38,7 +54,7 @@ const ProfileModal = () => {
                     <span>환경 설정</span>
                </ProfileSetting>
                <hr></hr>
-               <LogOut>
+               <LogOut onClick={onLogout}>
                     <span>로그아웃</span>
                </LogOut>
           </MyprofileWrap>
@@ -132,4 +148,7 @@ const LogOut = styled.div`
      display: flex;
      align-items: center;
      margin: auto;
+     &:hover {
+          background-color: rgba(0, 0, 0, 0.1);
+     }
 `;

@@ -1,10 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import AddPlayerModal from "./AddPlayerModal";
 import { SlNote } from "react-icons/sl";
 import { IoIosArrowDown, IoIosAdd, IoMdPerson } from "react-icons/io";
+import { __getChatRoom } from "../../redux/modules/room";
 
 const ChatList = () => {
+     const dispatch = useDispatch();
+     const rooms = useSelector((state) => state.room);
+
+     useEffect(() => {
+          dispatch(__getChatRoom());
+          console.log(rooms)
+     }, [dispatch])
+     //팀원추가 모달창
      const [addPlayer, setAddPlayer] = useState(false);
 
      return (
@@ -27,25 +37,14 @@ const ChatList = () => {
                <DirectWrap>
                     <details>
                          <summary>다이렉트 메세지</summary>
-                         <div className="team-line-style">
-                              <button>
-                                   <IoMdPerson className="plus-team-style" />
-                              </button>
-                              <span>유저1</span>
-                         </div>
-                         <div className="team-line-style">
-                              <button>
-                                   <IoMdPerson className="plus-team-style" />
-                              </button>
-                              <span>유저2</span>
-                         </div>
-                         <div className="team-line-style">
-                              <button>
-                                   <IoMdPerson className="plus-team-style" />
-                              </button>
-                              <span>유저3</span>
-                         </div>
-
+                              {/* {rooms.map((list) => (
+                                        <div className="team-line-style">
+                                             <button>
+                                                  <IoMdPerson className="plus-team-style" />
+                                             </button>
+                                             <span>{list.username}</span>
+                                        </div>
+                              ))} */}
                          <div className="team-line-style">
                               <button>
                                    <IoIosAdd className="plus-team-style" />

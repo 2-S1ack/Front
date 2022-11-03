@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import ChatList from "./ChatList";
 import {
@@ -103,80 +103,16 @@ const Chat = (props) => {
                          </ChatUserNav>
                          <ChatLog>
                               <div className="log-text-style">
-                                   <div>
+                                   <ChatUserInfo>
                                         <IoMdPerson className="user-style" />
-                                   </div>
-                                   <span></span>
+                                        <Useranme>
+                                             <p>이름</p>
+                                             <p>내용</p>
+                                        </Useranme>
+                                   </ChatUserInfo>
                               </div>
                          </ChatLog>
-                         <ChatInputWrap>
-                              <div className="chat-input-style">
-                                   <ChatHeader>
-                                        <button>
-                                             <AiOutlineBold />
-                                        </button>
-                                        <button>
-                                             <AiOutlineItalic />
-                                        </button>
-                                        <button className="line">
-                                             <AiOutlineStrikethrough />
-                                        </button>
-                                        <button>
-                                             <FiLink />
-                                        </button>
-                                        <button>
-                                             <AiOutlineOrderedList />
-                                        </button>
-                                        <button>
-                                             <AiOutlineUnorderedList />
-                                        </button>
-                                        <button>
-                                             <AiOutlineAlignLeft />
-                                        </button>
-                                        <button>
-                                             <BiCodeAlt />
-                                        </button>
-                                        <button>
-                                             <BiCodeBlock />
-                                        </button>
-                                   </ChatHeader>
-                                   <ChatInput
-                                        // value={message}
-                                        type="text"
-                                        placeholder="내용을 입력해주세요."
-                                        // onEnterPress={onEnterPress}
-                                        // onChange={(e) => {setMessage(e.target.value)}}
-                                   />
-                                   <ChatFooter>
-                                        <div>
-                                             <button>
-                                                  <IoIosAdd className="footer-btn-center-style" />
-                                             </button>
-                                             <button>
-                                                  <BsCameraVideo />
-                                             </button>
-                                             <button>
-                                                  <AiOutlineAudio />
-                                             </button>
-                                             <button>
-                                                  <BsEmojiSmile />
-                                             </button>
-                                             <button>
-                                                  <MdAlternateEmail />
-                                             </button>
-                                             <button>
-                                                  <MdTextFormat />
-                                             </button>
-                                        </div>
-                                        <button>
-                                             <IoMdSend />
-                                        </button>
-                                   </ChatFooter>
-                              </div>
-                         </ChatInputWrap>
-                         <ChatInfo>
-                              Shift + Enter 키를 눌러 새 행을 추가합니다
-                         </ChatInfo>
+                         <ChatBox />
                     </UserChat>
                </UserchatWrap>
           </ChatScreen>
@@ -258,120 +194,9 @@ const ChatLog = styled.div`
           }
      }
 `;
-//chat box
-const ChatInputWrap = styled.div`
-     width: 100%;
-     height: 16%;
-     margin-top: 10px;
-     padding: 0 20px;
-     box-sizing: border-box;
-     .chat-input-style {
-          height: 100%;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          flex-direction: column;
-          border: 1px solid gray;
-          border-radius: 10px;
-          overflow: hidden;
-     }
-`;
 
-const ChatHeader = styled.div`
-     width: 100%;
-     height: 32px;
-     padding: 5px;
-     background-color: #f8f8f8;
+const ChatUserInfo = styled.div`
      display: flex;
-     align-items: center;
-     button {
-          margin: 0 5px;
-          color: var(--color-chatinput-header-btn);
-          background-color: transparent;
-          border: none;
-          width: 28px;
-          height: 28px;
-          display: flex;
-          align-items: center;
-          justify-content: flex-start;
-          font-size: 18px;
-          padding: 5px;
-          position: relative; //이것때문에 모달이 어두워져도 계속 보임
-          margin-left: 5px;
-     }
-
-     button:nth-child(4)::after,
-     button:nth-child(5)::after,
-     button:nth-child(7)::after,
-     button:nth-child(8)::after {
-          position: absolute;
-          left: -5px;
-          content: "";
-          background-color: var(--color-chatinput-header-btn);
-          height: 20px;
-          width: 1px;
-          z-index: 0;
-     }
 `;
 
-const ChatInput = styled.input`
-     width: 98%;
-     height: 35px;
-     border: none;
-     padding: 4px;
-     outline: none;
-`;
-
-const ChatFooter = styled.div`
-     width: 100%;
-     height: 32px;
-     display: flex;
-     align-items: center;
-     justify-content: space-between;
-     padding: 4px;
-     button {
-          margin: 0 5px;
-          background-color: transparent;
-          border: none;
-          width: 28px;
-          height: 28px;
-          font-size: 18px;
-          padding: 5px;
-          color: var(--color-chatinput-footer-btn);
-          padding: 5px;
-          position: relative;
-          margin-left: 5px;
-     }
-     button:first-child {
-          background-color: var(--color-chatinput-footer-back);
-          border-radius: 50%;
-          padding-top: 2px;
-
-          .footer-btn-center-style {
-               margin-top: 3px;
-          }
-     }
-     button:nth-child(2)::after,
-     button:nth-child(4)::after {
-          position: absolute;
-          z-index: 0;
-          left: -5px;
-          content: "";
-          flex-grow: 1;
-          background-color: var(--color-chatinput-header-btn);
-          height: 20px;
-          width: 1px;
-     }
-`;
-
-const ChatInfo = styled.div`
-     box-sizing: border-box;
-     height: 24px;
-     width: 100%;
-     padding: 0 20px;
-     display: flex;
-     justify-content: flex-end;
-     align-items: center;
-     font-size: 10.5px;
-     color: #949494;
-`;
+const Useranme = styled.div``;
