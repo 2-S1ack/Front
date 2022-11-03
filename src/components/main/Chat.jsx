@@ -172,7 +172,6 @@ const ChatLog = styled.div`
           .user-style {
                width: 36px;
                height: 36px;
-               margin-top: 7px;
                background-color: orangered;
                color: white;
                border-radius: 5px;
@@ -185,6 +184,16 @@ const ChatLog = styled.div`
 
 const ChatUserInfo = styled.div`
      display: flex;
+     align-items: center;
 `;
 
-const Useranme = styled.div``;
+const Useranme = styled.div`
+     padding: 0 8px;
+     font-size: 15px;
+     p {
+          font-size: 13px;
+     }
+     P:first-child {
+          font-weight: bold;
+     }
+`;

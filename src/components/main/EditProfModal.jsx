@@ -53,15 +53,19 @@ const EditProfModal = ({ hide }) => {
      }, [image.preview_URL]);
 
      const onPatchHandler = () => {
-          let formData = new FormData();
-          formData.append("file", image.file);
-          formData.append("name", prof.name);
-          console.log("test", prof.name);
-          dispatch(_patchProfile(formData));
-          alert("완료");
-          //콘솔식
-          for (let value of formData.values()) {
-               console.log(value);
+          if (prof.name === "" && prof.file === "") {
+               alert("제목이나 내용 둘다 비어있을 수 없습니다.");
+          } else {
+               let formData = new FormData();
+               formData.append("file", image.file);
+               formData.append("name", prof.name);
+               console.log("test", prof.name);
+               dispatch(_patchProfile(formData));
+               alert("완료");
+               //콘솔식
+               for (let value of formData.values()) {
+                    console.log(value);
+               }
           }
      };
 
