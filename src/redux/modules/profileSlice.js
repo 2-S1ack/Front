@@ -14,18 +14,19 @@ export const _patchProfile = createAsyncThunk(
           try {
                console.log(payload);
                const res = await axiosInstance.patch(
-                    "/api/member/profile/",
-                    payload.formData,
+                    "/api/member/profile",
+                    payload,
                     {
                          headers: {
-                              "Content-type": "multipart/form-data",
+                              // "Content-type": "multipart/form-data",
                               authorization:
                                    sessionStorage.getItem("authorization"),
+                              refresh_token:
+                                   sessionStorage.getItem("refresh_token"),
                               withCredentials: true,
                          },
                     }
                );
-               console.log(res);
                return thunkAPI.fulfillWithValue(res);
           } catch (error) {
                return thunkAPI.rejectWithValue(error);

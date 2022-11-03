@@ -21,7 +21,8 @@ const EditProfModal = ({ hide }) => {
 
      const onChangeHandler = (e) => {
           const name = e.target.value;
-          setProf({ ...prof, name });
+          setProf({ ...prof, name: name });
+          //console.log(e.target.value);
      };
 
      const saveImage = (e) => {
@@ -54,11 +55,9 @@ const EditProfModal = ({ hide }) => {
      const onPatchHandler = () => {
           let formData = new FormData();
           formData.append("file", image.file);
-          formData.append(
-               "formData",
-               new Blob([JSON.stringify(prof)], { type: "application/json" })
-          );
-          dispatch(_patchProfile({ formData }));
+          formData.append("name", prof.name);
+          console.log("test", prof.name);
+          dispatch(_patchProfile(formData));
           alert("완료");
           //콘솔식
           for (let value of formData.values()) {

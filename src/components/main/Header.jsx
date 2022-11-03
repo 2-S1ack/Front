@@ -8,7 +8,7 @@ import { AiOutlineClockCircle } from "react-icons/ai";
 
 const Header = () => {
      const [modalOn, setModalOn] = useState(false);
-
+     const userinfo = JSON.parse(sessionStorage.getItem("userinfo"));
      return (
           <HeaderNav>
                <div className="main-first-bar">

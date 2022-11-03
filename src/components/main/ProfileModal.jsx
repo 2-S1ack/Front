@@ -27,7 +27,7 @@ const ProfileModal = () => {
      return (
           <MyprofileWrap>
                <MyProfileImg>
-                    <img src="/images/default.PNG" />
+                    <img src={userinfo.filename} alt="profile" />
                     <div>
                          <span>{userinfo.username}</span>
                          <span>🟢 대화 가능</span>
