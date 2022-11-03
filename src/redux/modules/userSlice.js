@@ -16,7 +16,6 @@ export const _postEmailCheck = createAsyncThunk(
 
      async (payload, thunkAPI) => {
           try {
-               console.log(payload);
                const res = await axiosInstance.post(
                     "/api/member/duplication/email",
                     payload
@@ -153,14 +152,13 @@ const userList = createSlice({
                     );
                } else {
                     state.isLogin = false;
-                    alert("오류");
+                    alert("이메일이나 비밀번호를 확인해주세요");
                }
           },
           [_postUserLogin.rejected]: (state, action) => {
                state.isLoading = false;
                state.isLogin = false;
                state.error = action.payload;
-               alert("로그인 확인");
           },
      },
 });

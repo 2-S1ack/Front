@@ -1,4 +1,4 @@
-import Layout from "../components/ui/Layout";
+import LoginLayout from "../components/ui/LoginLayout";
 import Footer from "../components/ui/Footer";
 import RegisterForm from "../components/login/RegisterForm";
 import LoginHeader from "../components/ui/LoginHeader";
@@ -7,9 +7,9 @@ function Register() {
      return (
           <>
                <LoginHeader />
-               <Layout>
+               <LoginLayout>
                     <RegisterForm />
-               </Layout>
+               </LoginLayout>
                <Footer />
           </>
      );

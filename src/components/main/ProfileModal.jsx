@@ -1,12 +1,16 @@
+import { useState } from "react";
 import styled from "styled-components";
+import EditProfModal from "./EditProfModal";
 
 const ProfileModal = () => {
+     const [modalOn, setModalOn] = useState(false);
+     const userinfo = JSON.parse(sessionStorage.getItem("userinfo"));
      return (
           <MyprofileWrap>
                <MyProfileImg>
                     <img src="/images/default.PNG" />
                     <div>
-                         <span>유저</span>
+                         <span>{userinfo.username}</span>
                          <span>🟢 대화 가능</span>
                     </div>
                </MyProfileImg>
@@ -17,7 +21,20 @@ const ProfileModal = () => {
                </StateChange>
                <hr></hr>
                <ProfileSetting>
-                    <span>프로필</span>
+                    <span
+                         onClick={() => {
+                              setModalOn(!modalOn);
+                         }}
+                    >
+                         프로필
+                    </span>
+                    {modalOn && (
+                         <EditProfModal
+                              hide={() => {
+                                   setModalOn(false);
+                              }}
+                         />
+                    )}
                     <span>환경 설정</span>
                </ProfileSetting>
                <hr></hr>
