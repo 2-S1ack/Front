@@ -20,6 +20,8 @@ const ProfileModal = () => {
 
      const userinfo = JSON.parse(sessionStorage.getItem("userinfo"));
 
+     console.log("info", userinfo);
+
      useEffect(() => {
           if (!sessionStorage.getItem("authorization")) dispatch(logoutState());
      });
@@ -27,7 +29,7 @@ const ProfileModal = () => {
      return (
           <MyprofileWrap>
                <MyProfileImg>
-                    <img src={userinfo.filename} alt="profile" />
+                    <img src="/images/default.PNG" />
                     <div>
                          <span>{userinfo.username}</span>
                          <span>🟢 대화 가능</span>
