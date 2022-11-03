@@ -1,13 +1,14 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { logoutState } from "../../redux/modules/userSlice";
+import EditProfModal from "./EditProfModal";
 
 const ProfileModal = () => {
      const dispatch = useDispatch();
      const navigate = useNavigate();
-
+     const [modalOn, setModalOn] = useState(false);
      const onLogout = () => {
           sessionStorage.removeItem("authorization");
           sessionStorage.removeItem("refresh_token");
@@ -16,6 +17,8 @@ const ProfileModal = () => {
           alert("로그아웃 됨");
           navigate("/");
      };
+
+     const userinfo = JSON.parse(sessionStorage.getItem("userinfo"));
 
      useEffect(() => {
           if (!sessionStorage.getItem("authorization")) dispatch(logoutState());

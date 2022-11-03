@@ -1,25 +1,13 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import ChatList from "./ChatList";
-import {
-     AiOutlineBold,
-     AiOutlineItalic,
-     AiOutlineStrikethrough,
-     AiOutlineUnorderedList,
-     AiOutlineOrderedList,
-     AiOutlineAlignLeft,
-     AiOutlineAudio,
-} from "react-icons/ai";
-import { FiLink } from "react-icons/fi";
-import { BiCodeBlock, BiCodeAlt } from "react-icons/bi";
-import { BsCameraVideo, BsEmojiSmile } from "react-icons/bs";
-import { MdAlternateEmail, MdTextFormat } from "react-icons/md";
-import { IoIosAdd, IoMdSend, IoMdPerson } from "react-icons/io";
-import { useDispatch, useSelector } from "react-redux";
-import { __getRoomList, __getUserChatList } from "../../redux/modules/room";
+
+import { IoMdPerson } from "react-icons/io";
 
 import StompJS from "stompjs";
 import SockJS from "sockjs-client";
+
+import ChatBox from "./ChatBox";
+import ChatList from "./ChatList";
 
 const Chat = (props) => {
      //  const dispatch = useDispatch();
