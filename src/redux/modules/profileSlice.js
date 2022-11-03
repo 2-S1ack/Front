@@ -10,19 +10,30 @@ const initialState = {
      error: null,
 };
 
-export const _patchProfile = createAsyncThunk("profilePatch", async (payload, thunkAPI) => {
-     try {
-          await axiosInstance.patch("/api/member/profile", payload.formData,
-               {
-                    headers: {
-                         authorization: sessionStorage.getItem("authorization"),
-                         withCredentials: true,
-                    },
-               })
-          return thunkAPI.fulfillWithValue(payload);
-     } catch (error) {
-          return thunkAPI.rejectWithValue(error);
-     }
+
+export const _patchProfile = createAsyncThunk(
+     "profilePatch",
+     async (payload, thunkAPI) => {
+          try {
+               //console.log(payload);
+               const res = await axiosInstance.patch(
+                    "/api/member/profile",
+                    payload,
+                    {
+                         headers: {
+                              // "Content-type": "multipart/form-data",
+                              authorization:
+                                   sessionStorage.getItem("authorization"),
+                              refresh_token:
+                                   sessionStorage.getItem("refresh_token"),
+                              withCredentials: true,
+                         },
+                    }
+               );
+               return thunkAPI.fulfillWithValue(res);
+          } catch (error) {
+               return thunkAPI.rejectWithValue(error);
+          }
      }
 );
 
@@ -36,7 +47,13 @@ const profilePatch = createSlice({
           },
           [_patchProfile.fulfilled]: (state, action) => {
                state.isLoading = false;
-               state.profile = action.payload;
+              state.post = action.payload;
+               const getData = JSON.parse(sessionStorage.getItem("userinfo"));
+               getData.filename = action.payload.data.filename;
+               getData.username = action.payload.data.username;
+               sessionStorage.setItem("userinfo", JSON.stringify(getData));
+               //console.log(getData.filename);
+               //console.log("do", action.payload.data.filename);
           },
           [_patchProfile.rejected]: (state, action) => {
                state.isLoading = false;

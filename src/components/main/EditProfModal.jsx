@@ -8,6 +8,71 @@ const EditProfModal = ({ hide }) => {
      const dispatch = useDispatch();
      const navigate = useNavigate();
 
+     const [image, setImage] = useState({
+          file: "",
+          preview_URL:
+               "https://ca.slack-edge.com/T01L2TNGW3T-U03V4RE75D1-g5b77b0a15a5-512",
+     });
+     const [prof, setProf] = useState({ name: "", file: "" });
+
+     const userinfo = JSON.parse(sessionStorage.getItem("userinfo"));
+
+     // console.log(userinfo.username);
+
+     let inputRef;
+
+     const onChangeHandler = (e) => {
+          const name = e.target.value;
+          setProf({ ...prof, name: name });
+          //console.log(e.target.value);
+     };
+
+     const saveImage = (e) => {
+          e.preventDefault();
+          if (e.target.files[0]) {
+               URL.revokeObjectURL(image.preview_URL);
+               const preview_URL = URL.createObjectURL(e.target.files[0]);
+
+               setImage(() => ({
+                    file: e.target.files[0],
+                    preview_URL: preview_URL,
+               }));
+          } else {
+               const preview_URL = URL.createObjectURL(e.target.files[0]);
+
+               setImage(() => ({
+                    file: e.target.files[0],
+                    preview_URL: preview_URL,
+               }));
+          }
+          setProf({ ...prof, file: image.preview_URL });
+     };
+     useEffect(() => {
+          // 컴포넌트가 언마운트되면 createObjectURL()을 통해 생성한 기존 URL을 폐기
+          return () => {
+               URL.revokeObjectURL(image.preview_URL);
+          };
+     }, [image.preview_URL]);
+
+     const onPatchHandler = () => {
+          if (prof.name === "" || prof.file === "") {
+               alert("이름과 사진 업로드를 완료해주세요.");
+          } else {
+               let formData = new FormData();
+               formData.append("file", image.file);
+               formData.append("name", prof.name);
+               console.log("test", prof.name);
+               dispatch(_patchProfile(formData));
+               alert("완료");
+               window.location.replace("/main");
+               // //콘솔식
+               // for (let value of formData.values()) {
+               //      console.log(value);
+               // }
+          }
+     };
+
+
      const initialState = {
           name: ""
       };

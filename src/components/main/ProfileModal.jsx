@@ -20,6 +20,8 @@ const ProfileModal = () => {
 
      const userinfo = JSON.parse(sessionStorage.getItem("userinfo"));
 
+     console.log("info", userinfo);
+
      useEffect(() => {
           if (!sessionStorage.getItem("authorization")) dispatch(logoutState());
      });
