@@ -2,11 +2,14 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { axiosInstance } from "../../shared/Instance";
 
 const initialState = {
-     name: "",
-     file: "",
+     profile: {
+          name: "",
+          file: ""
+     },
      isLoading: false,
      error: null,
 };
+
 
 export const _patchProfile = createAsyncThunk(
      "profilePatch",
@@ -44,7 +47,7 @@ const profilePatch = createSlice({
           },
           [_patchProfile.fulfilled]: (state, action) => {
                state.isLoading = false;
-               state.post = action.payload;
+              state.post = action.payload;
                const getData = JSON.parse(sessionStorage.getItem("userinfo"));
                getData.filename = action.payload.data.filename;
                getData.username = action.payload.data.username;

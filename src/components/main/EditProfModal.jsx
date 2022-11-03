@@ -7,6 +7,7 @@ import { _patchProfile } from "../../redux/modules/profileSlice";
 const EditProfModal = ({ hide }) => {
      const dispatch = useDispatch();
      const navigate = useNavigate();
+
      const [image, setImage] = useState({
           file: "",
           preview_URL:
@@ -71,41 +72,124 @@ const EditProfModal = ({ hide }) => {
           }
      };
 
+
+     const initialState = {
+          name: ""
+      };
+      const userinfo = JSON.parse(sessionStorage.getItem("userinfo"));
+  
+      const [profileName, setProfileName] = useState(initialState);
+      const [profileImg, setProfileImg] = useState("");
+  
+      const changeImg = (e) => {
+        setProfileImg(URL.createObjectURL(e.target.files[0]));
+      };
+  
+      const onChangeNameHandler = (e) => {
+          const {name, value } = e.target;
+          setProfileName({...profileName, [name]: value});
+      };
+  
+      const onChangeProfile = (e) => {    
+        e.preventDefault();
+        
+        let formData = new FormData();
+        let profileImage = document.getElementById("img_file");
+        formData.append("name", new Blob([JSON.stringify(profileName)], {type: "application/json"}));
+        formData.append("file", profileImage.files[0]);
+        dispatch(_patchProfile(formData));
+      };
+
+     
+  
+     // const [image, setImage] = useState({
+     //      file: "",
+     //      preview_URL:
+     //           "https://ca.slack-edge.com/T01L2TNGW3T-U03V4RE75D1-g5b77b0a15a5-512",
+     // });
+     // const [prof, setProf] = useState({ name: "", file: "" });
+
+     // const userinfo = JSON.parse(sessionStorage.getItem("userinfo"));
+
+     // // console.log(userinfo.username);
+
+     // let inputRef;
+
+     // const onChangeHandler = (e) => {
+     //      const name = e.target.value;
+     //      setProf({ ...prof, name });
+     // };
+
+     // const saveImage = (e) => {
+     //      e.preventDefault();
+     //      if (e.target.files[0]) {
+     //           URL.revokeObjectURL(image.preview_URL);
+     //           const preview_URL = URL.createObjectURL(e.target.files[0]);
+
+     //           setImage(() => ({
+     //                file: e.target.files[0],
+     //                preview_URL: preview_URL,
+     //           }));
+     //      } else {
+     //           const preview_URL = URL.createObjectURL(e.target.files[0]);
+
+     //           setImage(() => ({
+     //                file: e.target.files[0],
+     //                preview_URL: preview_URL,
+     //           }));
+     //      }
+     //      setProf({ ...prof, file: image.preview_URL });
+     // };
+     // useEffect(() => {
+     //      // 컴포넌트가 언마운트되면 createObjectURL()을 통해 생성한 기존 URL을 폐기
+     //      return () => {
+     //           URL.revokeObjectURL(image.preview_URL);
+     //      };
+     // }, [image.preview_URL]);
+
+     // const onPatchHandler = () => {
+     //      let formData = new FormData();
+     //      formData.append("file", image.file);
+     //      formData.append(
+     //           "formData",
+     //           new Blob([JSON.stringify(prof)], { type: "application/json" })
+     //      );
+     //      dispatch(_patchProfile({ formData }));
+     //      alert("완료");
+     //      //콘솔식
+     //      for (let value of formData.values()) {
+     //           console.log(value);
+     //      }
+     // };
+
      return (
           <>
                <AddPlayerOverlay />
-               <EditProfWrap>
+               <EditProfWrap enctype="multipart/form-data" onSubmit={onChangeProfile}>
                     <div className="prof-arr-style">
                          <div className="prof-header-style">내 프로필 편집</div>
                          <div className="prof-info-style">
                               <div className="prof-info-name-style">
-                                   <p>성명</p>
+                                   <p>닉네임</p>
                                    <input
                                         type="text"
                                         name="name"
-                                        defaultValue={userinfo.username}
-                                        onChange={onChangeHandler}
+                                        value={profileName.username}
+                                        onChange={onChangeNameHandler}
                                    />
                               </div>
                               <div className="prof-info-img-style">
                                    <p>프로필사진</p>
-                                   <img src={image?.preview_URL} alt="" />
+                                   <img src={profileImg ? profileImg : "images/profile.png"} alt="이미지가 없습니다"/>
+                                   <Label htmlFor="img_file">사진 선택</Label>
                                    <input
+                                        id="img_file"
                                         className="img-input-none"
                                         type="file"
                                         accept="image/*"
-                                        name="file"
-                                        onChange={saveImage}
-                                        ref={(refParam) =>
-                                             (inputRef = refParam)
-                                        }
+                                        onChange={changeImg}
                                    />
-                                   <button
-                                        type="button"
-                                        onClick={() => inputRef.click()}
-                                   >
-                                        사진 업로드
-                                   </button>
+
                               </div>
                          </div>
                     </div>
@@ -118,7 +202,7 @@ const EditProfModal = ({ hide }) => {
                          </button>
                          <button
                               className="prof-ok-btn-style"
-                              onClick={onPatchHandler}
+                              type="submit"
                          >
                               변경사항 저장
                          </button>
@@ -140,7 +224,7 @@ const AddPlayerOverlay = styled.div`
      right: 0;
 `;
 
-const EditProfWrap = styled.div`
+const EditProfWrap = styled.form`
      width: 700px;
      height: 500px;
      border: 1px solid gray;
@@ -240,4 +324,11 @@ const EditProfWrap = styled.div`
                color: white;
           }
      }
+`;
+
+const Label = styled.label`
+     width: 200px;
+     width: 30px;
+     border: 1px solid gray;
+     border-radius: 10px;
 `;
