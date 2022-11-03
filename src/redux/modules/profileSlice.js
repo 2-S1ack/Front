@@ -2,34 +2,27 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { axiosInstance } from "../../shared/Instance";
 
 const initialState = {
-     name: "",
-     file: "",
+     profile: {
+          name: "",
+          file: ""
+     },
      isLoading: false,
      error: null,
 };
 
-export const _patchProfile = createAsyncThunk(
-     "profilePatch",
-     async (payload, thunkAPI) => {
-          try {
-               console.log(payload);
-               const res = await axiosInstance.patch(
-                    "/api/member/profile/",
-                    payload.formData,
-                    {
-                         headers: {
-                              "Content-type": "multipart/form-data",
-                              authorization:
-                                   sessionStorage.getItem("authorization"),
-                              withCredentials: true,
-                         },
-                    }
-               );
-               console.log(res);
-               return thunkAPI.fulfillWithValue(res);
-          } catch (error) {
-               return thunkAPI.rejectWithValue(error);
-          }
+export const _patchProfile = createAsyncThunk("profilePatch", async (payload, thunkAPI) => {
+     try {
+          await axiosInstance.patch("/api/member/profile", payload.formData,
+               {
+                    headers: {
+                         authorization: sessionStorage.getItem("authorization"),
+                         withCredentials: true,
+                    },
+               })
+          return thunkAPI.fulfillWithValue(payload);
+     } catch (error) {
+          return thunkAPI.rejectWithValue(error);
+     }
      }
 );
 
@@ -43,7 +36,7 @@ const profilePatch = createSlice({
           },
           [_patchProfile.fulfilled]: (state, action) => {
                state.isLoading = false;
-               state.post = action.payload;
+               state.profile = action.payload;
           },
           [_patchProfile.rejected]: (state, action) => {
                state.isLoading = false;
