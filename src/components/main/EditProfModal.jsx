@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { _patchProfile } from "../../redux/modules/profileSlice";
 
 const EditProfModal = ({ hide }) => {
      const dispatch = useDispatch();
-
+     const navigate = useNavigate();
      const [image, setImage] = useState({
           file: "",
           preview_URL:
@@ -53,8 +54,8 @@ const EditProfModal = ({ hide }) => {
      }, [image.preview_URL]);
 
      const onPatchHandler = () => {
-          if (prof.name === "" && prof.file === "") {
-               alert("제목이나 내용 둘다 비어있을 수 없습니다.");
+          if (prof.name === "" || prof.file === "") {
+               alert("이름과 사진 업로드를 완료해주세요.");
           } else {
                let formData = new FormData();
                formData.append("file", image.file);
@@ -62,10 +63,11 @@ const EditProfModal = ({ hide }) => {
                console.log("test", prof.name);
                dispatch(_patchProfile(formData));
                alert("완료");
-               //콘솔식
-               for (let value of formData.values()) {
-                    console.log(value);
-               }
+               window.location.replace("/main");
+               // //콘솔식
+               // for (let value of formData.values()) {
+               //      console.log(value);
+               // }
           }
      };
 
